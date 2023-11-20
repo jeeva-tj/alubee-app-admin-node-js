@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "iot-alubee",
+  "private_key_id": "a4299b00aa02bf3a4af85ab4dd0411a13896bbb2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCfdMSExYClYyDT\nTLWdNe8XuzhjwERrw9WRQrianPxk7xFtnXTVQytxnsyqdZOv87H/lNHzBPyat9aW\nQ7lXOW9cFv72gYX7hgUNDAOvHnVwwl72tK05KYUXl6c0uQU+y3t/0m48KeAftNAe\nuc6zVmNAqwqCJrCTFEEshLKOlKG4IdYQd+Uv1I9env2mfsWPlQk1Fti/kZxlfnHr\nM2F6n6IBq4U/SlMXGOgzW8XaR6wnBpEshCmICkkmZdvq9RsG4FfjNOzZLYvfmIRT\nm66jtS7GH2v/L224JeYjmt0Lw9L/x/7xpS/Vl6rC7PibaOzsxZl0WAU6U+NicXqR\nCX+4wfDfAgMBAAECggEALiuBO3B0b27kckojzAFx2U08ZqWlKg7qJ8VJ7nrGGfOe\n+D4/NgDc82knmbOxr6DASWCt6c/n1GSmnZu+bqMSu3dtG7MlOE7153EzH+GR37Ro\nCscF4SdEgjBHGdz4x9XjTH+Bq6n0WznfiQYD86lv06mywTyyo+OZe2pwyRgAO3Ab\nAP04powVRFBGVT4rW1FapkQMUUVwnlaunQdwwm2bjSlIavdLDGx3/z2C2QzlbApj\nDuDR0UXGKai1PJlzOX4JvLkVB0t2mdTsGQIavbmqD9gI4HRzdOzkDoMfpyugSmtA\ndwvrpggJ9RFyXoFgAuiIzVo8FoXzvfgNUxOWkokxAQKBgQDguoYSunXLer8N1ki1\n2gJ2+rMlB+2yIG/tdv8x3uIrQmMFjuxUcIZ4cM6AJPkve7McMBIeSPjs812h9a1D\nsXV+YWWZcrOwrSSXJpemhu/6iUSne9jTPUui29ya5B0ROD0896eclWbcpJ+qbLYu\nI7vrDWFCaePM+g1T1ZQIqwUSswKBgQC1pQ0a7wvvRV1rNLy+ow298XL+HUheWNEK\ncpx43WGJ0A3tgAUy1ix+tiyK6HeE94YxuzS7kaL1rW9rGcb66NO1vxLdG8ji5XRH\nNsDZ7CTv5nxSpQwU9QUYmoiJPz4vInnGQzaGDrX8WYHfc4EekM0VtzhApT1wlLKR\npP962ztPJQKBgAMs34QYOl3bqCNr6a8YG3zO4gUd7Y/cwXgbfFOaEJwH3hpQAKrY\nxC2jemd5HkQ7fTZiv37KDSpb7fDB5ebU9RIKEkNuyXcvmxq/otjpgy6JDf1H1LJ3\nZUAx1xYhLv/1SXg5D5c4zTFE6jSgQJq6SodxsvQbRuq4hcOvet38fJ/dAoGAEAdD\nc8f6Pp/ZUXdy3EOZF9Sxd/jvhNvDfm+EnSmzzKxePkHYs5awkHHU1mETAtmwrry9\nN3vvbExkk4fPxh47aEM3D+m+vT7QFuSe+dvbmou1FrnXqhXA4F3qhGnfO9uH8VXG\n/udXabAgRK51i1PttOfY/+NU25VTeISdwqKLxj0CgYEAnRHPaV8+H6Wjb7b0oy1u\nrHjavWiiP3b3Aq8lL81NyCAINjYgyJu6E510Vows2gkeu6x2buc//EKidfdFmmn7\n4/UgblEJquMKC0jAcZSuD2mNaaCIDKRgOECuHLbz5UatuJsBab9B0NTKojlUcRzM\niXAspA2I0EXp7w7VNbsgCGw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "alubee@iot-alubee.iam.gserviceaccount.com",
+  "client_id": "105473577336557457258",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/alubee%40iot-alubee.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

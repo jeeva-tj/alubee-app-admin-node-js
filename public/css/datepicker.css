@@ -1,0 +1,23 @@
+.datepicker-picker {
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+.datepicker-controls button {
+    background-color: green !important;
+    color: #fff !important;
+}
+
+.datepicker-grid span {
+    color: #000 !important;
+}
+
+.datepicker-grid .focused {
+    background-color: green !important;
+    color: #fff !important;
+}
+
+.datepicker-grid span:hover {
+    background-color: green !important;
+    color: #fff !important;
+}

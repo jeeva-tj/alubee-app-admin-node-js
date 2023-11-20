@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+/* ============================ Navbar ============================*/
+.hamburger_icon {
+    stroke: #000;
+}
+
+.hamburger_div:hover .hamburger_icon {
+    stroke: #fff;
+}
+
+.profile_setting_icon {
+    stroke: #00a651;
+}
+
+.profile_div:hover .profile_setting_icon {
+    stroke: #fff;
+}
+
+/* ========================================================= */
+
+
+/*================== Sidebar mobile ==================  */
+.sidebar_mobile_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.sidebar_mobile_container .sidebar_mobile {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: fit-content;
+    height: 100vh;
+    background-color: #fff;
+    animation: fadeIn .6s;
+}
+
+#sidebar_mobile_container.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+@media(min-width:768px) {
+    .sidebar_mobile_container {
+        display: none;
+    }
+}
+
+/* ====================================================== */
+
+/*=============================== login screen ==========================*/
+
+.login_container {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: url('../img/bg.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    z-index: 1;
+    padding: 0px 2rem;
+}
+
+.login_container::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(1, 55, 13, 0.5);
+    /* background: rgba(1, 55, 13, 0.5); */
+    z-index: -1;
+}
+
+.shape {
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    z-index: -1;
+}
+
+.password_container {
+    position: relative;
+}
+
+.password_container #toggler {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    content: '';
+    display: flex;
+}
+.password_container #emp_password_toggler {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    content: '';
+    display: flex;
+}
+.password_container #emp_cp_toggler {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    content: '';
+    display: flex;
+}
+.password_container #emp_u_password_toggler {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    content: '';
+    display: flex;
+}
+.password_container #emp_cu_password_toggler {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    content: '';
+    display: flex;
+}
+
+.password_container .fa-eye {
+    color: rgb(170, 170, 170);
+}
+
+.password_container .fa-eye-slash {
+    color: lightsalmon;
+}
+
+/* ========================================================================== */
+
+
+/* =========================== Machine No Dropdown Filter ========================= */
+
+.machineNumber_dropdown {
+    position: relative;
+    width: 100%;
+    height: 50px;
+
+}
+
+.machineNumber_dropdown::before {
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 24px;
+    z-index: 1;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #333;
+    border-right: 2px solid #333;
+    transform: rotate(-45deg);
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.machineNumber_dropdown.active::before {
+    top: 21px;
+    transform: rotate(-225deg);
+}
+
+.machineNumber_dropdown input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #cbcbcb;
+    outline: none;
+    box-sizing: 0 5px 20px rgba(0, 0, 0, 0.05);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.35px;
+    line-height: 24px;
+    color: #000;
+    outline: none;
+}
+
+.machineNumber_dropdown input:focus {
+    border: 1px solid #04A551;
+}
+
+
+.machineNumber_dropdown input::placeholder {
+    color: #000;
+}
+
+.machineNumber_dropdown .machineNumber_options {
+    position: absolute;
+    top: 56px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: none;
+    z-index: 9999;
+}
+
+.machineNumber_dropdown.active .machineNumber_options {
+    display: block;
+}
+
+.machineNumber_dropdown .machineNumber_options {
+    overflow-y: scroll;
+}
+
+/* width */
+.machineNumber_dropdown .machineNumber_options::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.machineNumber_dropdown .machineNumber_options::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 20px;
+}
+
+/* Handle */
+.machineNumber_dropdown .machineNumber_options::-webkit-scrollbar-thumb {
+    background: #bbbbbb;
+    border-radius: 20px;
+}
+
+/* Handle on hover */
+.machineNumber_dropdown .machineNumber_options::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.machineNumber_dropdown .machineNumber_options .options {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400px;
+    letter-spacing: 0.35px;
+    line-height: 24px;
+}
+
+.machineNumber_dropdown .machineNumber_options div:hover {
+    background: rgb(237, 237, 237);
+    color: #000;
+}
+
+@media(min-width:768px){
+    .machineNumber_dropdown{
+        width: 300px;
+    }
+}
+
+/* ================================================================================= */
+
+
+
+/* ====================== live dashboard - operator details style ==============================*/
+
+.operator_detail {
+    position: relative;
+    overflow: hidden;
+}
+
+.operator_detail::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    background: linear-gradient(140.9deg, rgb(196, 241, 204) -14.02%, rgba(144, 202, 249, 0) 70.5%);
+    border-radius: 50%;
+    top: -160px;
+    right: -130px;
+}
+
+.operator_detail::after {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    background: linear-gradient(120.9deg, rgb(196, 241, 204) -14.02%, rgba(144, 202, 249, 0) 70.5%);
+    border-radius: 50%;
+    top: 20px;
+    right: -130px;
+}
+
+/* ================================================================================ */
+
+
+.pdf_title_container {
+    position: relative;
+}
+
+.pdf_title_container .tittle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+}
