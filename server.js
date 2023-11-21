@@ -20,20 +20,6 @@ if (process.env.NODE_NEV !== 'production') {
 }
 
 
-// Run the query
-// bigquery
-//     .query(query)
-//     .then(results => {
-//         console.log(results);
-//         const rows = results[0];
-//         console.log(rows);
-//         rows.forEach(row => console.log(row));
-//     })
-//     .catch(err => {
-//         console.error('ERROR:', err);
-//     });
-
-
 const __dirname = path.resolve()
 
 app.use(express.static('public'))
