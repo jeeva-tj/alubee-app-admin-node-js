@@ -23,6 +23,7 @@ const userProtect = asyncHandler(async (req, res, next) => {
 
             let role = user[0][0].Role;
 
+
             if (req.originalUrl === '/v2/api/profile' && role === 'Owner') {
                 next();
 
@@ -35,6 +36,27 @@ const userProtect = asyncHandler(async (req, res, next) => {
             } else if (req.originalUrl === '/v2/api/user/reset-pwd' && role === 'Owner'){
                 next();
                 
+            } else if (req.originalUrl === '/v2/api/report' && (role === 'Owner' || role === 'Viewer')){
+                next();
+
+            } else if (req.originalUrl === '/v2/api/view-report' && (role === 'Owner' || role === 'Viewer')){
+                next();
+
+            } else if (req.originalUrl === '/v2/api/work-orders' && role === 'Owner'){
+                next();
+
+            } else if (req.originalUrl === '/v2/api/work-order-req' && role === 'Owner'){
+                next();
+
+            } else if (req.originalUrl === '/v2/api/work-order-create' && role === 'Owner'){
+                next();
+
+            } else if (req.route.path === '/work-order/:id' && role === 'Owner'){
+                next();
+
+            } else if (req.originalUrl === '/v2/api/dashboard/machine-no' && role === 'Owner'){
+                next();
+
             }else{
                 res.status(401)
                 throw Error("you can't access this api!")
