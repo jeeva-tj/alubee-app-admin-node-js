@@ -19,5 +19,4 @@ router.route('/user/reset-pwd').put(userProtect, resetPwd)
 router.route('/user/:id').get(userProtect, userById).put(userProtect, updateUser).delete(userProtect, deleteUser)
 
 
-
 export default router;
