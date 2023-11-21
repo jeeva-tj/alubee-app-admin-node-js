@@ -4,6 +4,9 @@ import morgan from 'morgan';
 import path from 'path';
 import viewRouter from './routers/view_router.js';
 import userRouter from './routers/user_router.js';
+import reportRouter from './routers/report_router.js';
+import workOrderRouter from './routers/workOrder_router.js';
+import dashboardRouter from './routers/dashboard_router.js';
 import { errorHandle, notFound} from './middlewares/ErrorMiddleware.js';
 
 // config env file
@@ -15,7 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 
-if (process.env.NODE_NEV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'))
 }
 
@@ -36,7 +39,7 @@ app.set('view engine', 'ejs');
 
 // router
 app.use('/', viewRouter);
-app.use('/v2/api', userRouter);
+app.use('/v2/api', userRouter, reportRouter, workOrderRouter, dashboardRouter);
 
 
 // error middleware
