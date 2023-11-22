@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import path from 'path';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -38,9 +38,9 @@ app.use(session(session_config));
 app.use(cookieParser());
 
 
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'))
-}
+// if (process.env.NODE_ENV === 'development') {
+//     app.use(morgan('dev'))
+// }
 
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1) // trust first proxy
