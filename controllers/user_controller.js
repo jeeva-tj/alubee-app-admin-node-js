@@ -23,7 +23,7 @@ const login = asyncHandler(async (req, res) => {
       name: '',
       role: ''
     }
-
+   
     let bcrypt_password = '';
     loginRes[0].forEach((val) => {
         bcrypt_password = val.Pssword;
@@ -38,6 +38,8 @@ const login = asyncHandler(async (req, res) => {
         res.status(400)
         throw Error("Invalid credentials!")
     }
+
+    req.session.user = resData;
 
     res.status(200).json({
         msg: 'Login successful!',
@@ -229,6 +231,10 @@ const resetPwd = asyncHandler(async (req, res) => {
 })
 
 
+const logout = asyncHandler(async (req, res) => {
+    req.session.destroy();
+    res.redirect('/')
+})
 
 
 
@@ -242,5 +248,6 @@ export {
     newUser,
     updateUser,
     deleteUser,
-    resetPwd
+    resetPwd,
+    logout
 }
