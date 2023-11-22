@@ -1,4 +1,4 @@
-const host = 'http://localhost:8080'
+const host = window.location.origin;
 const version = 'v2';
 const type = 'api';
 const hostUrl = `${host}/${version}/${type}`;
@@ -8,11 +8,7 @@ const login_password = document.getElementById('password');
 const login_form = document.getElementById('login_form');
 const login_loading = document.getElementById('loading');
 
-if (sessionStorage.getItem('alubee')) {
-    location.href = host + '/dashboard';
-}else{
-    sessionStorage.removeItem('alubee')
-}
+
 
 login_form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -25,30 +21,27 @@ login_form.addEventListener('submit', async (e) => {
         }
 
         const config = {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify(data)
         }
 
         login_loading.innerHTML = 'loading...';
 
-        const res = await axios.post(`${hostUrl}/login`, data, config)
-
-        const storeLocal = {
-            name: res?.data?.data?.name,
-            email: res?.data?.data?.email,
-            token: res?.data?.token,
-        }
+        const fetchApi = await fetch(`${hostUrl}/login`, config);
+        const res = await fetchApi.json()
         
-        sessionStorage.setItem('alubee', JSON.stringify(storeLocal))
-        
-        login_loading.innerHTML = '';
+        sessionStorage.setItem('alubee', res?.token)
 
         if (sessionStorage.getItem('alubee')) {
             location.href = host + '/dashboard';
         } else {
             sessionStorage.removeItem('alubee')
         }
+        
+        login_loading.innerHTML = '';
         
     } catch (error) {
 
@@ -60,5 +53,7 @@ login_form.addEventListener('submit', async (e) => {
 
 
 
-
-
+// async function logout(){
+//     const fetchApi = await fetch(`${hostUrl}/logout`);
+//     console.log(fetchApi);
+// }
