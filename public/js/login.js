@@ -34,6 +34,7 @@ login_form.addEventListener('submit', async (e) => {
         const res = await fetchApi.json()
         
         sessionStorage.setItem('alubee', res?.token)
+        sessionStorage.setItem('alubee_name', res?.data?.name)
 
         if (sessionStorage.getItem('alubee')) {
             location.href = host + '/dashboard';
@@ -53,7 +54,20 @@ login_form.addEventListener('submit', async (e) => {
 
 
 
-// async function logout(){
-//     const fetchApi = await fetch(`${hostUrl}/logout`);
-//     console.log(fetchApi);
-// }
+// Password show/hide functionality
+var password = document.getElementById('password');
+var toggler = document.getElementById('toggler');
+
+showHidePassword = () => {
+    if (password.type == 'password') {
+        password.setAttribute('type', 'text');
+        toggler.classList.add('fa-eye-slash');
+        toggler.classList.remove('fa-eye');
+    } else {
+        toggler.classList.remove('fa-eye-slash');
+        toggler.classList.add('fa-eye');
+        password.setAttribute('type', 'password');
+    }
+};
+toggler.addEventListener('click', showHidePassword);
+//====

@@ -31,7 +31,7 @@ const userProtect = asyncHandler(async (req, res, next) => {
                 let role = user[0][0].Role;
 
 
-                if (req.originalUrl === '/v2/api/profile' && role === 'Owner') {
+                if (req.originalUrl === '/v2/api/profile' && (role === 'Owner' || role === 'Editor' || role === 'Viewer')) {
                     next();
 
                 } else if (req.originalUrl === '/v2/api/user' && role === 'Owner') {
@@ -43,25 +43,25 @@ const userProtect = asyncHandler(async (req, res, next) => {
                 } else if (req.originalUrl === '/v2/api/user/reset-pwd' && role === 'Owner') {
                     next();
 
-                } else if (req.originalUrl === '/v2/api/report' && (role === 'Owner' || role === 'Viewer')) {
+                } else if (req.originalUrl === '/v2/api/report' && (role === 'Owner' || role === 'Editor' || role === 'Viewer')) {
                     next();
 
-                } else if (req.originalUrl === '/v2/api/view-report' && (role === 'Owner' || role === 'Viewer')) {
+                } else if (req.originalUrl === '/v2/api/view-report' && (role === 'Owner' || role === 'Editor' || role === 'Viewer')) {
                     next();
 
-                } else if (req.originalUrl === '/v2/api/work-orders' && role === 'Owner') {
+                } else if (req.originalUrl === '/v2/api/work-orders' && (role === 'Owner' || role === 'Editor')) {
                     next();
 
-                } else if (req.originalUrl === '/v2/api/work-order-req' && role === 'Owner') {
+                } else if (req.originalUrl === '/v2/api/work-order-req' && (role === 'Owner' || role === 'Editor')) {
                     next();
 
-                } else if (req.originalUrl === '/v2/api/work-order-create' && role === 'Owner') {
+                } else if (req.originalUrl === '/v2/api/work-order-create' && (role === 'Owner' || role === 'Editor')) {
                     next();
 
-                } else if (req.route.path === '/work-order/:id' && role === 'Owner') {
+                } else if (req.route.path === '/work-order/:id' && (role === 'Owner' || role === 'Editor')) {
                     next();
 
-                } else if (req.originalUrl === '/v2/api/dashboard/machine-no' && role === 'Owner') {
+                } else if (req.originalUrl === '/v2/api/dashboard/machine-no' && (role === 'Owner' || role === 'Editor' || role === 'Viewer')) {
                     next();
 
                 } else {

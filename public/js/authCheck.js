@@ -17,5 +17,22 @@ mob_logout_btn.addEventListener('click', () => logout());
 async function logout() {
     await fetch(`${hostUrl}/logout`);
     sessionStorage.removeItem('alubee');
+    sessionStorage.removeItem('alubee_name');
     location.href = origin;
 }
+
+
+async function userProfile(){
+
+    const alubee_token = sessionStorage.getItem('alubee');
+    const alubee_name = sessionStorage.getItem('alubee_name');
+    const profile_initial = document.getElementById('profile_initial');
+
+    if (alubee_token && alubee_name) {
+        profile_initial.innerHTML = alubee_name?.charAt(0);
+    }else{
+        logout();
+    }
+}
+
+userProfile();

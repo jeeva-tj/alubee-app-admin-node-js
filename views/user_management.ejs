@@ -63,18 +63,9 @@
                             <path d="M4 4l6 6"></path>
                         </svg>
                     </div>
-                    <div
-                        class="flex items-center bg-[#F2F3F3] hover:bg-[#00a651] cursor-pointer p-1.5 rounded-full profile_div">
-                        <img src="/img/profile.svg" alt="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
-                            fill="none" class="ml-2 profile_setting_icon" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" class="tabler-icon tabler-icon-settings">
-                            <path
-                                d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z">
-                            </path>
-                            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
-                        </svg>
-                    </div>
+                    <a href="/profile" id="profile_initial"
+                        class=" w-9 h-9 flex uppercase items-center bg-[#ddeee5] text-sm font-bold text-center flex justify-center hover:bg-[#00a651] hover:text-white cursor-pointer p-1.5 rounded-full profile_div">
+                    </a>
                 </div>
             </div>
         </div>
@@ -87,9 +78,10 @@
                         <img src="/img/logo.png" alt="" class="w-20 h-[70px] object-contain">
                     </a>
                     <ul>
+                        <% if(user==='Owner' || user==='Editor' || user==='Viewer' ){ %>
                         <li class="mb-2" id="live_dashboard_mob_nav">
                             <a href="/dashboard"
-                                class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                                class="flex items-center shadow-sm hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                                 <svg fill="#000000" class="mr-3" width="23px" height="23px" viewBox="0 0 24 24"
                                     id="dashboard" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
                                     class="icon line-color">
@@ -105,9 +97,12 @@
                                 Live Dashboard
                             </a>
                         </li>
+                        <% } %>
+
+                        <% if(user==='Owner' || user==='Editor' || user==='Viewer' ){ %>
                         <li class="mb-2" id="report_mob_nav">
                             <a href="/reports"
-                                class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                                class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                                 <svg fill="#000000" width="23px" height="23px" class="mr-3" viewBox="0 0 24 24"
                                     id="report-pie-chart-3" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
                                     class="icon line-color">
@@ -123,9 +118,12 @@
                                 Reports
                             </a>
                         </li>
+                        <% } %>
+
+                        <% if(user==='Owner' || user==='Editor' ){ %>
                         <li class="mb-2" id="work_order_mob_nav">
                             <a href="/work-order"
-                                class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                                class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                                 <svg fill="#000000" width="23px" class="mr-3" height="23px" viewBox="0 0 24 24"
                                     id="work" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
                                     class="icon line-color">
@@ -144,38 +142,12 @@
                                 Work Orders
                             </a>
                         </li>
-                        <!-- <li class="mb-2" id="">
-                            <a href="/org-tree"
-                                class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
-                                <svg width="24px" class="mr-3" height="24px" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.25 8.5C7.04493 8.5 8.5 7.04493 8.5 5.25C8.5 3.45507 7.04493 2 5.25 2C3.45507 2 2 3.45507 2 5.25C2 7.04493 3.45507 8.5 5.25 8.5Z"
-                                        stroke="#00a651" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                    <path
-                                        d="M5 22C6.65685 22 8 20.6569 8 19C8 17.3431 6.65685 16 5 16C3.34315 16 2 17.3431 2 19C2 20.6569 3.34315 22 5 22Z"
-                                        stroke="#00a651" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                    <path
-                                        d="M19 22C20.6569 22 22 20.6569 22 19C22 17.3431 20.6569 16 19 16C17.3431 16 16 17.3431 16 19C16 20.6569 17.3431 22 19 22Z"
-                                        stroke="#00a651" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                    <g opacity="0.4">
-                                        <path d="M5 9V16" stroke="#BCBEC0" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path
-                                            d="M5.12891 9C5.57891 10.75 7.17891 12.05 9.06891 12.04L12.4989 12.03C15.1189 12.02 17.3489 13.7 18.1689 16.04"
-                                            stroke="#BCBEC0" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </g>
-                                </svg>
-                                Org. Tree
-                            </a>
-                        </li> -->
+                        <% } %>
+
+                        <% if(user==='Owner'){ %>
                         <li class="mb-2" id="device_manager_mob_nav">
                             <a href="/device-manager"
-                                class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                                class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                                 <svg width="23px" height="23px" class="mr-3" viewBox="0 0 16 16" id="device-16px"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <rect id="Retângulo_223" data-name="Retângulo 223" width="16" height="16"
@@ -244,9 +216,12 @@
                                 Device Manager
                             </a>
                         </li>
+                        <% } %>
+
+                        <% if(user==='Owner'){ %>
                         <li class="mb-2" id="user_management_mob_nav">
                             <a href="/user-management"
-                                class="flex items-center bg-[#ddeee5] shadow-sm py-3 px-5 text-sm font-medium rounded-full">
+                                class="flex items-center bg-[#ddeee5] font-medium py-3 px-5 text-sm  rounded-full">
                                 <svg width="23px" height="23px" class="mr-3" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="9" cy="6" r="4" stroke="#00a651" stroke-width="1.5" />
@@ -261,9 +236,12 @@
                                 User Management
                             </a>
                         </li>
-                        <li class="mb-2" id="">
-                            <a href="/logout"
-                                class="flex items-center hover:bg-[#ffe5e5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                        <% } %>
+                        
+                        <li class="mb-2">
+                            <button
+                                id="mob_logout_btn"
+                                class="flex items-center hover:bg-[#ffe5e5] hover:font-medium py-3 px-5 text-sm w-full rounded-full">
                                 <svg width="23px" height="23px" class="mr-3" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.5"
@@ -273,7 +251,7 @@
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 Logout
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -288,9 +266,10 @@
         aria-label="Sidebar">
         <div class="h-full md:px-3 md:py-4 mt-5 overflow-y-auto bg-white-50 text-black">
             <ul>
+                <% if(user==='Owner' || user==='Editor' || user === 'Viewer' ){ %>
                 <li class="mb-2" id="live_dashboard_nav">
                     <a href="/dashboard"
-                        class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium shadow-sm py-3 px-5 text-sm  rounded-full">
                         <svg fill="#000000" class="mr-3" width="23px" height="23px" viewBox="0 0 24 24" id="dashboard"
                             data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color">
                             <path id="secondary"
@@ -305,9 +284,12 @@
                         Live Dashboard
                     </a>
                 </li>
+                <% } %>
+
+                <% if(user==='Owner' || user ==='Editor' || user === 'Viewer' ){ %>
                 <li class="mb-2" id="report_nav">
                     <a href="/reports"
-                        class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                         <svg fill="#000000" width="23px" height="23px" class="mr-3" viewBox="0 0 24 24"
                             id="report-pie-chart-3" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
                             class="icon line-color">
@@ -322,9 +304,12 @@
                         Reports
                     </a>
                 </li>
+                <% } %>
+
+                <% if(user === 'Owner' || user === 'Editor'){ %>
                 <li class="mb-2" id="work_order_nav">
                     <a href="/work-order"
-                        class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                         <svg fill="#000000" width="23px" class="mr-3" height="23px" viewBox="0 0 24 24" id="work"
                             data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color">
                             <path id="primary"
@@ -342,34 +327,12 @@
                         Work Orders
                     </a>
                 </li>
-                <!-- <li class="mb-2" id="">
-                    <a href="/org-tree"
-                        class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
-                        <svg width="24px" class="mr-3" height="24px" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M5.25 8.5C7.04493 8.5 8.5 7.04493 8.5 5.25C8.5 3.45507 7.04493 2 5.25 2C3.45507 2 2 3.45507 2 5.25C2 7.04493 3.45507 8.5 5.25 8.5Z"
-                                stroke="#00a651" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path
-                                d="M5 22C6.65685 22 8 20.6569 8 19C8 17.3431 6.65685 16 5 16C3.34315 16 2 17.3431 2 19C2 20.6569 3.34315 22 5 22Z"
-                                stroke="#00a651" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path
-                                d="M19 22C20.6569 22 22 20.6569 22 19C22 17.3431 20.6569 16 19 16C17.3431 16 16 17.3431 16 19C16 20.6569 17.3431 22 19 22Z"
-                                stroke="#00a651" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <g opacity="0.4">
-                                <path d="M5 9V16" stroke="#BCBEC0" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path
-                                    d="M5.12891 9C5.57891 10.75 7.17891 12.05 9.06891 12.04L12.4989 12.03C15.1189 12.02 17.3489 13.7 18.1689 16.04"
-                                    stroke="#BCBEC0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </svg>
-                        Org. Tree
-                    </a>
-                </li> -->
+                <% } %>
+                
+                <% if(user==='Owner'){ %>
                 <li class="mb-2" id="device_manager_nav">
                     <a href="/device-manager"
-                        class="flex items-center hover:bg-[#ddeee5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                         <svg width="23px" height="23px" class="mr-3" viewBox="0 0 16 16" id="device-16px"
                             xmlns="http://www.w3.org/2000/svg">
                             <rect id="Retângulo_223" data-name="Retângulo 223" width="16" height="16" fill="#ccc"
@@ -433,9 +396,12 @@
                         Device Manager
                     </a>
                 </li>
+                <% } %>
+
+                <% if(user==='Owner' ){ %>
                 <li class="mb-2" id="user_management_nav">
                     <a href="/user-management"
-                        class="flex items-center bg-[#ddeee5] shadow-sm py-3 px-5 text-sm font-medium rounded-full">
+                        class="flex items-center bg-[#ddeee5] font-medium py-3 px-5 text-sm  rounded-full">
                         <svg width="23px" height="23px" class="mr-3" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <circle cx="9" cy="6" r="4" stroke="#00a651" stroke-width="1.5" />
@@ -450,9 +416,12 @@
                         User Management
                     </a>
                 </li>
+                <% } %>
+
                 <li class="mb-2">
-                    <a href="/logout"
-                        class="flex items-center hover:bg-[#ffe5e5] py-3 px-5 text-sm hover:font-medium rounded-full">
+                    <button
+                        id="logout_btn"
+                        class="flex items-center hover:bg-[#ffe5e5] hover:font-medium py-3 px-5 text-sm w-full  rounded-full">
                         <svg width="23px" height="23px" class="mr-3" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path opacity="0.5"
@@ -462,7 +431,7 @@
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         Logout
-                    </a>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -569,7 +538,8 @@
     </div>
 
 
-
+    <script src="/js/authCheck.js"></script>
+    <script src="/js/script.js"></script>
     <script src="/lib/tooltip/popper.min.js"></script>
     <script src="/lib/tooltip/tippy-bundle.umd.js"></script>
 

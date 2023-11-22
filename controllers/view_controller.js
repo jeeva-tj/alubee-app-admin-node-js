@@ -10,23 +10,23 @@ const loginPage = (req, res) => {
 }
 
 const dashboardPage = (req, res) => {
-    res.render('dashboard')
+    res.render('dashboard', { user: req?.session?.user?.role })
 }
 
 const reportPage = (req, res) => {
-    res.render('report')
+    res.render('report', { user: req?.session?.user?.role })
 }
 
 const workOrderPage = (req, res) => {
-    res.render('work_order')
+    res.render('work_order', { user: req?.session?.user?.role })
 }
 
 const deviceMangerPage = (req, res) => {
-    res.render('device_manager')
+    res.render('device_manager', { user: req?.session?.user?.role })
 }
 
 const userManagementPage = (req, res) => {
-    res.render('user_management')
+    res.render('user_management', { user: req?.session?.user?.role })
 }
 
 export {
