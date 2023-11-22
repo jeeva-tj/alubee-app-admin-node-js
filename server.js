@@ -38,9 +38,9 @@ app.use(session(session_config));
 app.use(cookieParser());
 
 
-// if (process.env.NODE_ENV === 'development') {
-//     app.use(morgan('dev'))
-// }
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
 
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1) // trust first proxy
