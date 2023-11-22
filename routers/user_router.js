@@ -7,7 +7,8 @@ import {
    updateUser,
    deleteUser,
    userById,
-   resetPwd
+   resetPwd,
+   logout
 } from '../controllers/user_controller.js';
 const router = express.Router();
 import { userProtect } from '../middlewares/AuthMiddleware.js';
@@ -17,6 +18,7 @@ router.route('/profile').get(userProtect, profile)
 router.route('/user').get(userProtect, allUser).post(userProtect, newUser)
 router.route('/user/reset-pwd').put(userProtect, resetPwd)
 router.route('/user/:id').get(userProtect, userById).put(userProtect, updateUser).delete(userProtect, deleteUser)
+router.route('/logout').get(logout)
 
 
 export default router;
