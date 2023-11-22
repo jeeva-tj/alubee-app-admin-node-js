@@ -1,6 +1,12 @@
 
 const loginPage = (req, res) => {
-    res.render('index')
+    const user = req?.session?.user;
+
+    if (user) {
+        res.redirect('/dashboard');
+    }else{
+        res.render('index')
+    }
 }
 
 const dashboardPage = (req, res) => {
