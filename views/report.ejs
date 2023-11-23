@@ -6,10 +6,9 @@
     <title>Reports</title>
     <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/datepicker.css">
-    <script src="/lib/tailwindcss.js"></script>
+    <link rel="stylesheet" href="/css/reports.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <script src="/lib/datepicker.min.js"></script>
+    <script src="/lib/tailwindcss.js"></script>
 </head>
 <body>
 
@@ -436,8 +435,9 @@
     </aside>
 
 
-    <div class="md:ml-64 ml-0 mt-[85px] z-0">
+    <div class="md:ml-64 ml-0 mt-[85px] z-0 report_container">
         <div class="ml-2 md:mr-4 mr-2 p-4 rounded-lg bg-[#F3F3F8] h-screen">
+
             <h2 class="text-xl font-bold">Reports</h2>
             <div class="bg-white p-5 shadow rounded-md mt-4">
                 <form id="reportFilter_form">
@@ -469,13 +469,259 @@
                     </div>
                 </form>
             </div>
+
+
+            <div id="pdf_page_container">
+                <div class="pdf_page_box">
+
+                    <button id="r_close_btn" class="r_close_btn" >
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0.5"
+                                d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z"
+                                stroke="red" stroke-width="1.5" />
+                            <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#1C274C" stroke-width="1.5"
+                                stroke-linecap="round" />
+                        </svg>
+                    </button>
+
+                    <div class="flex justify-end items-center mb-4 mt-5">
+                        <button type="button" class="p-2.5 shadow rounded text-sm bg-[#00a651] text-white flex items-center" onclick="generatePDF(event)">
+                            <span class="material-symbols-outlined mr-1">
+                                download
+                            </span>
+                            Download Report
+                        </button>
+                    </div>
+                
+                    <div class="bg-white" id="pdf-container">
+                        <div class="grid grid-cols-4">
+                            <div class="border border-gray-300">
+                                <div class="flex justify-center">
+                                    <img src="/img/logo.png" alt="" class="w-24 h-24 object-contain">
+                                </div>
+                            </div>
+                            <div class="col-span-2 pdf_title_container border border-gray-300">
+                                <div class="tittle">
+                                    <h2 class="font-bold text-[23px]">Shift Horoscope Details</h2>
+                                </div>
+                            </div>
+                            <div class="border border-gray-300">
+                                <div class="mb-2 p-0.5 border-b border-gray-300"><b>Unit:</b> 1</div>
+                                <div class="mb-2 p-0.5 border-b border-gray-300">
+                                    <b>Date:</b>
+                                    <span id="r_date"></span>
+                                </div>
+                                <div class="p-0.5">
+                                    <b>Shift:</b>
+                                    <span id="r_shift"></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-medium">1</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Machine Name/Number</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_machine"></div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-medium">2</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">In-Charge</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_inCharge"></div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-medium">3</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Supervisor</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_supervisor"></div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-medium">4</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Quality In-Charge</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_quality_inCharge"></div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-medium">5</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Operator</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_operator"></div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-medium">6</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Shift Start Time</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5"> - </div>
+                        </div>
+                        <div class="border border-gray-300 h-7 "></div>
+                
+                
+                        <div class="grid grid-cols-9 font-bold">
+                            <div class="border border-gray-300 p-0.5 text-center ">7</div>
+                            <div class="col-span-5 border border-gray-300 p-0.5 text-center">Production Detials</div>
+                            <div class="col-span-3 border border-gray-300 p-0.5 text-center">Rejection details</div>
+                        </div>
+                
+                
+                
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 text-center py-4 font-medium">S. No</div>
+                            <div class="col-span-5 border border-gray-300 font-medium text-center">
+                                <div class="grid grid-cols-2">
+                                    <div class="border-r border-gray-300 p-0.5 py-4">Part Name/Number</div>
+                                    <div class="">
+                                        <div class="border-b border-gray-300 p-0.5">Number of Shots</div>
+                                        <div class="grid grid-cols-2">
+                                            <div class="border-r border-gray-300 p-0.5">Planned</div>
+                                            <div class="p-0.5">Achieved</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-3 border border-gray-300 font-medium text-center">
+                                <div class="">
+                                    <div class="border-b border-gray-300 p-0.5">Number of Rejection</div>
+                                    <div class="grid grid-cols-2">
+                                        <div class="border-r border-gray-300 p-0.5">Planned</div>
+                                        <div class="p-0.5">Achieved</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 text-center ">1</div>
+                            <div class="col-span-5 border border-gray-300 text-center">
+                                <div class="grid grid-cols-2">
+                                    <div class="border-r border-gray-300 p-0.5" id="r_partNo"></div>
+                                    <div class="grid grid-cols-2">
+                                        <div class="border-r border-gray-300 p-0.5" id="r_shotPlan"></div>
+                                        <div class="p-0.5" id="r_shotCount"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-3 border border-gray-300  text-center">
+                                <div class="">
+                                    <div class="grid grid-cols-2">
+                                        <div class="border-r border-gray-300 p-0.5" id="r_rejPlan"></div>
+                                        <div class="p-0.5" id="r_rejCount"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 text-center "></div>
+                            <div class="col-span-5 border border-gray-300 text-center">
+                                <div class="grid grid-cols-2">
+                                    <div class="border-r border-gray-300 p-0.5 font-bold">Total</div>
+                                    <div class="grid grid-cols-2 font-medium">
+                                        <div class="border-r border-gray-300 p-0.5" id="r_total_shotPlan"></div>
+                                        <div class="p-0.5" id="r_total_shotCount"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-3 border border-gray-300  text-center font-medium">
+                                <div class="">
+                                    <div class="grid grid-cols-2">
+                                        <div class="border-r border-gray-300 p-0.5" id="r_total_rejPlan"></div>
+                                        <div class="p-0.5" id="r_total_rejCount"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="border border-gray-300 h-7 "></div>
+                
+                        <!-- Hourly Production Cum Rejection -->
+                        <div class="grid grid-cols-9 font-bold">
+                            <div class="border border-gray-300 p-0.5 text-center">8</div>
+                            <div class="col-span-8 border border-gray-300 p-0.5 font-bold text-center">Hourly Production Cum Rejection
+                            </div>
+                        </div>
+                
+                
+                        <div class="grid grid-cols-3 font-bold">
+                            <div class="border border-gray-300 text-center p-0.5">Time Bin</div>
+                            <div class="border border-gray-300 text-center p-0.5">Production</div>
+                            <div class="border border-gray-300 text-center p-0.5">Rejection</div>
+                        </div>
+                
+                        <div id="r_hourly_bins"></div>
+                
+                
+                        <div class="border border-gray-300 h-7 "></div>
+                
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-bold">9</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">Shift Average</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_shift_avg"></div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-bold">10</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">OEE</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5">-</div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-bold">11</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">Minimum Cycle Time</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5">-</div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-bold">12</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">Average Cycle Time</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5">-</div>
+                        </div>
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-0.5 text-center font-bold">13</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">Revenue Missed</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5">-</div>
+                        </div>
+                
+                
+                        <div class="border border-gray-300 h-7"></div>
+                
+                
+                        <div class="grid grid-cols-9">
+                            <div class="border border-gray-300 p-3 text-center"></div>
+                            <div class="col-span-4 border border-gray-300 p-3 font-bold">Signatures</div>
+                            <div class="col-span-4 border border-gray-300 p-3"></div>
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
+
+
 
 
     <script src="/js/authCheck.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/report.js"></script>
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/jspdf.debug.js"></script>
+    <script src="/lib/html2pdf.js"></script>
+
+    <script>
+        function generatePDF(event) {
+            event.preventDefault(); // Prevent the default behavior of the button
+
+            var element = document.getElementById('pdf-container');
+            var opt = {
+                margin: 0.6,
+                filename: 'alubee_hourly_report.pdf',
+                html2canvas: { scale: 6 },
+                jsPDF: { unit: 'in', format: [12, 15], orientation: 'portrait' }
+            };
+
+            // New Promise-based usage:
+            html2pdf().set(opt).from(element).save();
+
+            // Old monolithic-style usage:
+            // html2pdf(element, opt);
+        }
+    </script>
 
 
 </body>
