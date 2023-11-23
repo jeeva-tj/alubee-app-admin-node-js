@@ -3,11 +3,15 @@ const report_dates = document.getElementById('dates');
 const report_shifts = document.getElementById('shifts');
 const report_machines = document.getElementById('machine_no');
 const reportFilter_form = document.getElementById('reportFilter_form')
-
+const loader = document.getElementById('loader');
+const report_filter_form = document.getElementById('report_filter_form');
 
 async function reportsFilterReq() {
 
     try {
+
+        report_filter_form.classList.add('active');
+        loader.classList.add('active');
 
         const a_token = sessionStorage.getItem('alubee');
 
@@ -23,6 +27,9 @@ async function reportsFilterReq() {
         const reports = await rep.json();
 
         if (reports) {
+
+            report_filter_form.classList.remove('active');
+            loader.classList.remove('active');
             
             const dateArr = reports?.dates;
             const shiftArr = reports?.shifts;
@@ -93,6 +100,10 @@ reportFilter_form.addEventListener('submit', async(e) => {
     e.preventDefault();
 
         try {
+
+            // loader
+            loader.classList.add('active');
+
             const filterData = {
                 date: report_dates.value,
                 shift: report_shifts.value,
@@ -109,6 +120,7 @@ reportFilter_form.addEventListener('submit', async(e) => {
                 },
                 body: JSON.stringify(filterData)
             }
+
 
             const rep = await fetch(`${hostUrl}/view-report`, config)
             const reports = await rep.json();
@@ -147,6 +159,8 @@ reportFilter_form.addEventListener('submit', async(e) => {
                 r_hourly_bins.innerHTML = hourly_bins;
                 r_shift_avg.innerHTML = reports?.shift_average[0]?.shift_avg ? `${reports?.shift_average[0]?.shift_avg} shots` : 0;
 
+                // loader
+                loader.classList.remove('active');
                 pdf_page_container.classList.add('active');
 
             }else{

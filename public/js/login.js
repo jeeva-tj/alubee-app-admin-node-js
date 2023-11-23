@@ -6,7 +6,8 @@ const hostUrl = `${host}/${version}/${type}`;
 const login_email = document.getElementById('email');
 const login_password = document.getElementById('password');
 const login_form = document.getElementById('login_form');
-const login_loading = document.getElementById('loading');
+const loader = document.getElementById('loader');
+const login_err_msg = document.getElementById('login_err_msg');
 
 
 
@@ -20,35 +21,43 @@ login_form.addEventListener('submit', async (e) => {
             password: login_password.value
         }
 
-        const config = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        }
+        // const config = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(data)
+        // }
 
-        login_loading.innerHTML = 'loading...';
+        loader.classList.add('active');
 
-        const fetchApi = await fetch(`${hostUrl}/login`, config);
-        const res = await fetchApi.json()
+        const res = await axios.post(`${hostUrl}/login`, data);
+        // const res = await fetchApi.json()
         
-        sessionStorage.setItem('alubee', res?.token)
-        sessionStorage.setItem('alubee_name', res?.data?.name)
+        if (res) {
+            loader.classList.remove('active');
 
-        if (sessionStorage.getItem('alubee')) {
-            location.href = host + '/dashboard';
-        } else {
-            sessionStorage.removeItem('alubee')
+            sessionStorage.setItem('alubee', res?.token)
+            sessionStorage.setItem('alubee_name', res?.data?.name)
+
+            if (sessionStorage.getItem('alubee')) {
+                location.href = host + '/dashboard';
+            } else {
+                sessionStorage.removeItem('alubee')
+            }
         }
         
-        login_loading.innerHTML = '';
         
     } catch (error) {
-
+        loader.classList.remove('active');
         const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
-        console.log(resErr);
+        login_err_msg.innerHTML = `<div class="bg-[#F8D7D9] text-[#721C23] w-full p-2 text-center text-sm font-medium rounded mb-3">${resErr}</div>`;
     }
+})
+
+
+login_err_msg.addEventListener('click', () => {
+    login_err_msg.innerHTML = '';
 })
 
 
