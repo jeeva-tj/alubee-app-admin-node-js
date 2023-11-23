@@ -10,12 +10,17 @@ const login = asyncHandler(async (req, res) => {
 
     if (!email || !password) {
         res.status(400)
-        throw Error('please add all details')
+        throw new Error('please add all details')
     }
 
     const query = `SELECT * FROM alubee_dataset.alubee_user_table WHERE Email='${email}'`;
 
     const loginRes = await bigquery.query(query);
+
+    if (!loginRes[0][0]) {
+        res.status(400)
+        throw new Error("Invalid Email!")
+    }
     
     const resData = {
       id: '',
@@ -36,7 +41,7 @@ const login = asyncHandler(async (req, res) => {
     const isPassword = await bcrypt.compare(password, bcrypt_password)
     if (!isPassword) {
         res.status(400)
-        throw Error("Invalid credentials!")
+        throw new Error("Invalid credentials!")
     }
 
     req.session.user = resData;
@@ -55,7 +60,7 @@ const profile = asyncHandler(async (req, res) => {
 
     if (!req?.user) {
         res.status(400)
-        throw Error("User not found!")
+        throw new Error("User not found!")
     }
 
     const query = `SELECT User_ID, Email, Name, Phone, Role FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.user?.User_ID}`;
@@ -80,7 +85,7 @@ const userById = asyncHandler(async (req, res) => {
 
     if (!req?.params?.id) {
         res.status(400)
-        throw Error("User ID not found!")
+        throw new Error("User ID not found!")
     }
 
     const query = `SELECT User_ID, Email, Name, Phone, Role FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`;
@@ -89,7 +94,7 @@ const userById = asyncHandler(async (req, res) => {
 
     if (!user[0][0]?.User_ID) {
         res.status(400)
-        throw Error("User not found!")
+        throw new Error("User not found!")
     }
 
     res.status(200).send(user[0][0]);
@@ -103,7 +108,7 @@ const newUser = asyncHandler(async (req, res) => {
 
     if (!name || !email || !phone || !role || !password) {
         res.status(400)
-        throw Error('please add all details')
+        throw new Error('please add all details')
     }
 
     const getId_query = "SELECT MAX(User_ID) as user_id FROM alubee_dataset.alubee_user_table";
@@ -139,12 +144,12 @@ const updateUser = asyncHandler(async (req, res) => {
 
     if (!req?.params?.id) {
         res.status(400)
-        throw Error("User ID not found!")
+        throw new Error("User ID not found!")
     }
 
     if (!name || !email || !phone || !role) {
         res.status(400)
-        throw Error('please add all details')
+        throw new Error('please add all details')
     }
 
     const query = `SELECT User_ID FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`;
@@ -153,7 +158,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
     if (!existUser[0][0]?.User_ID) {
         res.status(400)
-        throw Error("User not found!")
+        throw new Error("User not found!")
     }
 
     const update_query = `UPDATE alubee_dataset.alubee_user_table SET Name = "${name}", Email = "${email}", Role = "${role}", Phone = "${phone}" WHERE User_ID = ${ req?.params?.id }`
@@ -173,7 +178,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
     if (!req?.params?.id) {
         res.status(400)
-        throw Error("User ID not found!")
+        throw new Error("User ID not found!")
     }
 
     const query = `SELECT User_ID FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`;
@@ -182,7 +187,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
     if (!existUser[0][0]?.User_ID) {
         res.status(400)
-        throw Error("User not found!")
+        throw new Error("User not found!")
     }
 
     const delete_query = `DELETE FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`
@@ -204,7 +209,7 @@ const resetPwd = asyncHandler(async (req, res) => {
 
     if (!email || !password) {
         res.status(400)
-        throw Error('please add all details')
+        throw new Error('please add all details')
     }
 
     const salt = await bcrypt.genSalt(10);
