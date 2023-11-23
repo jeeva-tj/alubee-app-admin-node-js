@@ -78,7 +78,7 @@
                         <% if(user==='Owner' || user==='Editor' || user==='Viewer' ){ %>
                         <li class="mb-2" id="live_dashboard_mob_nav">
                             <a href="/dashboard"
-                                class="flex items-center shadow-sm hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                                class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                                 <svg fill="#000000" class="mr-3" width="23px" height="23px" viewBox="0 0 24 24"
                                     id="dashboard" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
                                     class="icon line-color">
@@ -266,7 +266,7 @@
                 <% if(user==='Owner' || user==='Editor' || user === 'Viewer' ){ %>
                 <li class="mb-2" id="live_dashboard_nav">
                     <a href="/dashboard"
-                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium shadow-sm py-3 px-5 text-sm  rounded-full">
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
                         <svg fill="#000000" class="mr-3" width="23px" height="23px" viewBox="0 0 24 24" id="dashboard"
                             data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color">
                             <path id="secondary"
@@ -439,7 +439,8 @@
         <div class="ml-2 md:mr-4 mr-2 p-4 rounded-lg bg-[#F3F3F8] h-screen">
 
             <h2 class="text-xl font-bold">Reports</h2>
-            <div class="bg-white p-5 shadow rounded-md mt-4">
+
+            <div class="bg-white p-5 shadow rounded-md mt-4" id="report_filter_form">
                 <form id="reportFilter_form">
                     <div class="grid lg:grid-cols-3 gap-5">
                         <div class="">
@@ -469,6 +470,10 @@
                     </div>
                 </form>
             </div>
+
+            <section id="loader">
+                <span class="loader"></span>
+            </section>
 
 
             <div id="pdf_page_container">
@@ -506,12 +511,12 @@
                                 </div>
                             </div>
                             <div class="border border-gray-300">
-                                <div class="mb-2 p-0.5 border-b border-gray-300"><b>Unit:</b> 1</div>
-                                <div class="mb-2 p-0.5 border-b border-gray-300">
+                                <div class="mb-2 p-0.5 border-b border-gray-300 text-[15px]"><b>Unit:</b> 1</div>
+                                <div class="mb-2 p-0.5 border-b border-gray-300 text-[15px]">
                                     <b>Date:</b>
                                     <span id="r_date"></span>
                                 </div>
-                                <div class="p-0.5">
+                                <div class="p-0.5 text-[15px]">
                                     <b>Shift:</b>
                                     <span id="r_shift"></span>
                                 </div>
@@ -519,39 +524,39 @@
                         </div>
                 
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-medium">1</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Machine Name/Number</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_machine"></div>
+                            <div class="border border-gray-300 p-0.5 text-center font-medium text-[15px]">1</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium text-[15px]">Machine Name/Number</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]" id="r_machine"></div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-medium">2</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">In-Charge</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_inCharge"></div>
+                            <div class="border border-gray-300 p-0.5 text-center font-medium text-[15px]">2</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium text-[15px]">In-Charge</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]" id="r_inCharge"></div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-medium">3</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Supervisor</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_supervisor"></div>
+                            <div class="border border-gray-300 p-0.5 text-center font-medium text-[15px]">3</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium text-[15px]">Supervisor</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]" id="r_supervisor"></div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-medium">4</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Quality In-Charge</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_quality_inCharge"></div>
+                            <div class="border border-gray-300 p-0.5 text-center font-medium text-[15px]">4</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium text-[15px]">Quality In-Charge</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]" id="r_quality_inCharge"></div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-medium">5</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Operator</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_operator"></div>
+                            <div class="border border-gray-300 p-0.5 text-center font-medium text-[15px]">5</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium text-[15px]">Operator</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]" id="r_operator"></div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-medium">6</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium">Shift Start Time</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5"> - </div>
+                            <div class="border border-gray-300 p-0.5 text-center font-medium text-[15px]">6</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-medium text-[15px]">Shift Start Time</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]"> - </div>
                         </div>
                         <div class="border border-gray-300 h-7 "></div>
                 
                 
-                        <div class="grid grid-cols-9 font-bold">
+                        <div class="grid grid-cols-9 font-bold text-[15px]">
                             <div class="border border-gray-300 p-0.5 text-center ">7</div>
                             <div class="col-span-5 border border-gray-300 p-0.5 text-center">Production Detials</div>
                             <div class="col-span-3 border border-gray-300 p-0.5 text-center">Rejection details</div>
@@ -560,8 +565,8 @@
                 
                 
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 text-center py-4 font-medium">S. No</div>
-                            <div class="col-span-5 border border-gray-300 font-medium text-center">
+                            <div class="border border-gray-300 text-center py-4 font-medium text-[15px]">S. No</div>
+                            <div class="col-span-5 border border-gray-300 font-medium text-center text-[15px]">
                                 <div class="grid grid-cols-2">
                                     <div class="border-r border-gray-300 p-0.5 py-4">Part Name/Number</div>
                                     <div class="">
@@ -573,7 +578,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-span-3 border border-gray-300 font-medium text-center">
+                            <div class="col-span-3 border border-gray-300 font-medium text-[15px] text-center">
                                 <div class="">
                                     <div class="border-b border-gray-300 p-0.5">Number of Rejection</div>
                                     <div class="grid grid-cols-2">
@@ -587,7 +592,7 @@
                 
                         <div class="grid grid-cols-9">
                             <div class="border border-gray-300 text-center ">1</div>
-                            <div class="col-span-5 border border-gray-300 text-center">
+                            <div class="col-span-5 border border-gray-300 text-center text-[15px]">
                                 <div class="grid grid-cols-2">
                                     <div class="border-r border-gray-300 p-0.5" id="r_partNo"></div>
                                     <div class="grid grid-cols-2">
@@ -596,7 +601,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-span-3 border border-gray-300  text-center">
+                            <div class="col-span-3 border border-gray-300  text-center text-[15px]">
                                 <div class="">
                                     <div class="grid grid-cols-2">
                                         <div class="border-r border-gray-300 p-0.5" id="r_rejPlan"></div>
@@ -606,7 +611,7 @@
                             </div>
                         </div>
                 
-                        <div class="grid grid-cols-9">
+                        <div class="grid grid-cols-9 text-[15px]">
                             <div class="border border-gray-300 text-center "></div>
                             <div class="col-span-5 border border-gray-300 text-center">
                                 <div class="grid grid-cols-2">
@@ -627,17 +632,17 @@
                             </div>
                         </div>
                 
-                        <div class="border border-gray-300 h-7 "></div>
+                        <div class="border border-gray-300 h-7 text-[15px]"></div>
                 
                         <!-- Hourly Production Cum Rejection -->
-                        <div class="grid grid-cols-9 font-bold">
+                        <div class="grid grid-cols-9 font-bold text-[15px]">
                             <div class="border border-gray-300 p-0.5 text-center">8</div>
                             <div class="col-span-8 border border-gray-300 p-0.5 font-bold text-center">Hourly Production Cum Rejection
                             </div>
                         </div>
                 
                 
-                        <div class="grid grid-cols-3 font-bold">
+                        <div class="grid grid-cols-3 font-bold text-[15px]">
                             <div class="border border-gray-300 text-center p-0.5">Time Bin</div>
                             <div class="border border-gray-300 text-center p-0.5">Production</div>
                             <div class="border border-gray-300 text-center p-0.5">Rejection</div>
@@ -649,29 +654,29 @@
                         <div class="border border-gray-300 h-7 "></div>
                 
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold">9</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">Shift Average</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5" id="r_shift_avg"></div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">9</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">Shift Average</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]" id="r_shift_avg"></div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold">10</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">OEE</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5">-</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">10</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">OEE</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]">-</div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold">11</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">Minimum Cycle Time</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5">-</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">11</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">Minimum Cycle Time</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]">-</div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold">12</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">Average Cycle Time</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5">-</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">12</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">Average Cycle Time</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]">-</div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold">13</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold">Revenue Missed</div>
-                            <div class="col-span-4 border border-gray-300 p-0.5">-</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">13</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">Revenue Missed</div>
+                            <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]">-</div>
                         </div>
                 
                 
@@ -679,9 +684,9 @@
                 
                 
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-3 text-center"></div>
-                            <div class="col-span-4 border border-gray-300 p-3 font-bold">Signatures</div>
-                            <div class="col-span-4 border border-gray-300 p-3"></div>
+                            <div class="border border-gray-300 p-3 text-center text-[15px]"></div>
+                            <div class="col-span-4 border border-gray-300 p-3 font-bold text-[15px]">Signatures</div>
+                            <div class="col-span-4 border border-gray-300 p-3 text-[15px]"></div>
                         </div>
                 
                     </div>

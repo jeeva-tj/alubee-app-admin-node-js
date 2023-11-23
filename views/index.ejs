@@ -6,8 +6,10 @@
     <title>Alubee | Login</title>
     <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <script src="/lib/tailwindcss.js"></script>
+    <script src="/lib/axios.js"></script>
 </head>
 <body>
 
@@ -19,10 +21,13 @@
             </svg>
         </div>
         <div class="max-w-lg mx-auto mb-0 pt-40 login_box">
-            <div class="bg-white p-8 rounded shadow-md">
+            <div class="bg-white p-6 rounded shadow-md">
                 <img src="/img/logo.png" alt="" class="w-20 h-20 object-contain mx-auto mt-0 my-4">
                 <div class="text-xl font-medium mb-5 text-center">Sign In</div>
-                <div id="loading"></div>
+                <section id="loader">
+                    <span class="loader"></span>
+                </section>
+                <div id="login_err_msg"></div>
                 <form id="login_form">
                     <div class="mb-6">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email </label>
@@ -41,8 +46,6 @@
                             <span><i id="toggler" class="fa-regular fa-eye"></i></span>
                         </div>
                     </div>
-                    <input type="checkbox" name="remember_me" id="remember_me" class="border border-gray-300 rounded">
-                    <span class="text-sm font-medium">Remember me</span>
                     <button 
                         type="submit"
                         class="block text-white bg-[#00a651] mt-5 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded text-sm w-full px-5 py-2.5 text-center">Sign
