@@ -1,42 +1,4 @@
-
-
-#pdf_page_container{
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '';
-    width: 100%;
-    height: auto;
-    background: rgba(0,0,0,0.7);
-    padding: 30px 10px;
-    z-index: 999999;
-    display: none;
-}
-
-.pdf_page_box{
-    position: relative;
-    max-width: 920px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 2px;
-}
-
-#pdf_page_container.active{
-    display: block;
-}
-
-.pdf_page_box .r_close_btn{
-    position: absolute;
-    top: 0;
-    right: 0;
-    content: '';
-    cursor: pointer;
-}
-
-
-
-.loader{
+.loader {
     width: 43px;
     height: 43px;
     border-radius: 50%;
@@ -47,11 +9,11 @@
     animation: rotation 1s linear infinite;
 }
 
-#loader{
+#loader {
     display: none;
 }
 
-#loader.active{
+#loader.active {
     max-width: 43px;
     margin: 0 auto;
     display: block;
@@ -81,10 +43,12 @@
 }
 
 
-#report_filter_form{
+#work_order_table{
     display: block;
 }
 
-#report_filter_form.active{
+#work_order_table.active{
     display: none;
 }
+
+
