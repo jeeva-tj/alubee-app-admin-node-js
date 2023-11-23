@@ -68,7 +68,7 @@ app.use('/v2/api', userRouter, reportRouter, workOrderRouter, dashboardRouter);
 
 // error middleware
 app.use(errorHandle)
-app.use(notFound)
+// app.use(notFound)
 
 
 // Port
