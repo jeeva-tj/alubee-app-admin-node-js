@@ -24,8 +24,6 @@ async function getAllUsers() {
 
         if (data) {
 
-            console.log(data);
-
             user_management_table.classList.remove('active');
             loader.classList.remove('active');
 
