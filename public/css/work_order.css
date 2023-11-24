@@ -17,6 +17,7 @@
     max-width: 43px;
     margin: 0 auto;
     display: block;
+    padding: 2rem 0;
 }
 
 .loader:after {
