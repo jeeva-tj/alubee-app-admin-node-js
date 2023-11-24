@@ -52,4 +52,31 @@
     display: none;
 }
 
+#work_order_add_div{
+    display: block;
+}
+
+#work_order_add_div.active{
+    display: none;
+}
+
+#work_order_update_div{
+    display: block;
+}
+
+#work_order_update_div.active{
+    display: none;
+}
+
+
+.tableFixHead {
+    overflow: auto;
+    height: calc(100vh - 185px);
+}
+
+.tableFixHead thead{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
 
