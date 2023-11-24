@@ -1,8 +1,8 @@
-
 const work_order_tbody = document.getElementById('work_order_tbody');
 const work_order_table = document.getElementById('work_order_table');
 const loader = document.getElementById('loader');
 
+const notyf = new Notyf();
 
 async function getAllWorkOrders() {
 
@@ -14,24 +14,22 @@ async function getAllWorkOrders() {
         const a_token = sessionStorage.getItem('alubee');
 
         const config = {
-            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${a_token}`
             }
         }
 
-        const work_o = await fetch(`${hostUrl}/work-orders`, config)
-        const work_order = await work_o.json();
+        const { data } = await axios.get(`${hostUrl}/work-orders`, config)
 
 
-        if (work_order) {
+        if (data) {
 
             work_order_table.classList.remove('active');
             loader.classList.remove('active');
 
             let workOrders = '';
-            work_order.forEach((val, index) => {
+            data.forEach((val, index) => {
                 workOrders += `
                     <tr class="bg-white border-b ">
                         <td class="px-4 py-4 font-medium text-black">${index + 1}</td>
@@ -44,7 +42,7 @@ async function getAllWorkOrders() {
                         <td class="px-4 py-4">${val.Operator}</td>
                         <td class="px-4 py-4">${val.Date.value}</td>
                         <td class="px-3 py-3 flex items-center">
-                            <a href="/work-order-update?{% for key, value in row.items() %}{{ key }}={{ value }}{% if not loop.last %}&{% endif %}{% endfor %}"
+                            <a href='/work-order-update/${val.PlanID}'
                                 class="font-medium text-green-600 hover:underline" id="edit_work_order">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +60,8 @@ async function getAllWorkOrders() {
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </a>
-                            <a href="/work-order-delete?{% for key, value in row.items() %}{{ key }}={{ value }}{% if not loop.last %}&{% endif %}{% endfor %}"
+                            <button
+                                onclick="work_order_delete('${val.PlanID}')"
                                 class="ml-6 font-medium text-green-600 hover:underline" id="delete_work_order">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +82,7 @@ async function getAllWorkOrders() {
                                     <path opacity="0.34" d="M9.5 12.5H14.5" stroke="red" stroke-width="1.5"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </a>
+                            </button>
                         </td>
                     </tr>
                 
@@ -101,3 +100,53 @@ async function getAllWorkOrders() {
 }
 
 getAllWorkOrders();
+
+
+
+
+async function work_order_delete(id){
+
+    if (id) {
+        
+        const a_token = sessionStorage.getItem('alubee');
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${a_token}`
+            }
+        }
+
+        const { data } = await axios.delete(`${hostUrl}/work-order/${id}`, config);
+
+        if (data?.success) {
+            getAllWorkOrders();
+
+        }else{
+
+            notyf.error({
+                message: 'Something went wrong to delete!',
+                duration: 3000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            })
+        }
+
+    }else{
+
+        notyf.error({
+            message: 'ID is required to delete!',
+            duration: 3000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            dismissible: true
+        })
+    }
+}
+
+
