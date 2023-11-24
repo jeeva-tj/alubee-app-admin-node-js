@@ -29,11 +29,21 @@ const userManagementPage = (req, res) => {
     res.render('user_management', { user: req?.session?.user?.role })
 }
 
+const workOrderAddPage = (req, res) => {
+    res.render('work_order_add', { user: req?.session?.user?.role })
+}
+
+const workOrderUpdatePage = (req, res) => {
+    res.render('work_order_update', { user: req?.session?.user?.role })
+}
+
 export {
     loginPage,
     dashboardPage,
     reportPage,
     workOrderPage,
     deviceMangerPage,
-    userManagementPage
+    userManagementPage,
+    workOrderAddPage,
+    workOrderUpdatePage
 }
