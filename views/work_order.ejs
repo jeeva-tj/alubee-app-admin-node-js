@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/work_order.css">
     <script src="/lib/tailwindcss.js"></script>
+    <script src="/lib/axios.js"></script>
+    <script src="/lib/notyf.js"></script>
 </head>
 <body>
 
@@ -435,11 +437,11 @@
 
 
     <div class="md:ml-64 ml-0 mt-[80px] z-0">
-        <div class="ml-2 md:mr-4 mr-2 p-4 rounded-lg bg-[#F3F3F8] h-screen">
+        <div class="ml-2 md:mr-4 mr-2 p-4 rounded-lg bg-[#F3F3F8]">
 
             <div class="bg-white p-3 rounded-lg flex justify-between items-center mb-3">
                 <h2 class="text-xl font-bold">Work Orders List</h2>
-                <a href="/work-order-new"
+                <a href="/work-order-add"
                     class="bg-[#00a651] hover:shadow-lg p-2 rounded shadow text-white text-sm font-medium flex items-center">
                     <svg width="20px" class="mr-1" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -454,9 +456,9 @@
                 <span class="loader"></span>
             </section>
             
-            <div class="relative overflow-x-scroll shadow-md sm:rounded-lg" id="work_order_table">
+            <div class="relative overflow-x-scroll sm:rounded-lg tableFixHead" id="work_order_table">
                 <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                         <tr>
                             <th scope="col" class="px-4 py-3">S. No</th>
                             <th scope="col" class="px-4 py-3">PlanID</th>
