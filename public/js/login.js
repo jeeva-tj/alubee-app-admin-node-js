@@ -16,7 +16,7 @@ login_form.addEventListener('submit', async (e) => {
 
     try {
 
-        const data = {
+        const login_data = {
             email: login_email.value,
             password: login_password.value
         }
@@ -31,20 +31,23 @@ login_form.addEventListener('submit', async (e) => {
 
         loader.classList.add('active');
 
-        const res = await axios.post(`${hostUrl}/login`, data);
+        const { data } = await axios.post(`${hostUrl}/login`, login_data);
         // const res = await fetchApi.json()
-        
-        if (res) {
+
+        if (data?.token) {
             loader.classList.remove('active');
 
-            sessionStorage.setItem('alubee', res?.token)
-            sessionStorage.setItem('alubee_name', res?.data?.name)
+            sessionStorage.setItem('alubee', data?.token)
+            sessionStorage.setItem('alubee_name', data?.name)
 
             if (sessionStorage.getItem('alubee')) {
                 location.href = host + '/dashboard';
             } else {
                 sessionStorage.removeItem('alubee')
             }
+        }else{
+            loader.classList.remove('active');
+            login_err_msg.innerHTML = `<div class="bg-[#F8D7D9] text-[#721C23] w-full p-2 text-center text-sm font-medium rounded mb-3">Something went wrong!</div>`;
         }
         
         
