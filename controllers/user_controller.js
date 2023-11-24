@@ -50,7 +50,7 @@ const login = asyncHandler(async (req, res) => {
         msg: 'Login successful!',
         success: true,
         token: generateToken(resData.id),
-        data: resData
+        name: resData.name
     })
 })
 
