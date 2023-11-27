@@ -6,6 +6,9 @@ const reportFilter_form = document.getElementById('reportFilter_form')
 const loader = document.getElementById('loader');
 const report_filter_form = document.getElementById('report_filter_form');
 
+const notyf = new Notyf();
+
+
 async function reportsFilterReq() {
 
     try {
@@ -16,24 +19,23 @@ async function reportsFilterReq() {
         const a_token = sessionStorage.getItem('alubee');
 
         const config = {
-            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${a_token}`
             }
         }
 
-        const rep = await fetch(`${hostUrl}/report`, config)
-        const reports = await rep.json();
+        const { data } = await axios.get(`${hostUrl}/report`, config)
 
-        if (reports) {
+
+        if (data) {
 
             report_filter_form.classList.remove('active');
             loader.classList.remove('active');
-            
-            const dateArr = reports?.dates;
-            const shiftArr = reports?.shifts;
-            const machineArr = reports?.machine_no;
+
+            const dateArr = data?.dates;
+            const shiftArr = data?.shifts;
+            const machineArr = data?.machine_no;
 
             let dateOutput = '';
             dateArr.forEach((val) => {
@@ -59,12 +61,34 @@ async function reportsFilterReq() {
             report_dates.innerHTML = dateOutput;
             report_shifts.innerHTML = shiftOutput;
             report_machines.innerHTML = machineOutput;
+
+        }else{
+
+            loader.classList.remove('active');
+            notyf.error({
+                message: 'Something went wrong!',
+                duration: 5000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            })
         }
 
     } catch (error) {
 
+        loader.classList.remove('active');
         const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
-        console.log(resErr);
+        notyf.error({
+            message: resErr,
+            duration: 5000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            dismissible: true
+        })
     }
 }
 
@@ -113,17 +137,14 @@ reportFilter_form.addEventListener('submit', async(e) => {
             const a_token = sessionStorage.getItem('alubee');
 
             const config = {
-                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${a_token}`
                 },
-                body: JSON.stringify(filterData)
             }
 
+            const { data:reports } = await axios.post(`${hostUrl}/view-report`,filterData, config);
 
-            const rep = await fetch(`${hostUrl}/view-report`, config)
-            const reports = await rep.json();
 
             if (reports) {
                 r_date.innerHTML = reports?.data[0]?.Work_Date?.value ? reports?.data[0]?.Work_Date?.value : '-' ;
@@ -165,12 +186,31 @@ reportFilter_form.addEventListener('submit', async(e) => {
 
             }else{
                 pdf_page_container.classList.remove('active');
+                loader.classList.remove('active');
+                notyf.error({
+                    message: 'Something went wrong!',
+                    duration: 5000,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                    dismissible: true
+                })
             }
 
-            
         } catch (error) {
+
+            loader.classList.remove('active');
             const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
-            console.log(resErr);
+            notyf.error({
+                message: resErr,
+                duration: 5000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            })
         }
 })
 
