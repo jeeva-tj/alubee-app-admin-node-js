@@ -41,3 +41,24 @@
         transform: rotate(360deg);
     }
 }
+
+
+.password_container {
+    position: relative;
+}
+
+.password_container #toggler {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    content: '';
+    display: flex;
+}
+
+.password_container .fa-eye {
+    color: rgb(170, 170, 170);
+}
+
+.password_container .fa-eye-slash {
+    color: lightsalmon;
+}
