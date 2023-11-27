@@ -2,6 +2,7 @@ const loader = document.getElementById('loader');
 const user_management_tbody = document.getElementById('user_management_tbody');
 const user_management_table = document.getElementById('user_management_table');
 
+const notyf = new Notyf();
 
 async function getAllUsers() {
 
@@ -32,7 +33,7 @@ async function getAllUsers() {
                 users += `
                     <tr class="bg-white border-b ">
                         <td class="px-4 py-4">${val.User_ID}</td>
-                        <td class="px-4 py-4 text-black font-medium uppercase text-[13px]">${val.Name}</td>
+                        <td class="px-4 py-4 text-black font-medium uppercase text-[12px]">${val.Name}</td>
                         <td class="px-4 py-4">
                             <a href='mailto:${val.Email}' class='flex hover:text-blue-600 hover:underline'>
                                 ${val.Email}
@@ -47,7 +48,7 @@ async function getAllUsers() {
                         </td>
                         <td class="px-4 py-4 text-black font-medium">${val.Role}</td>
                         <td class="px-3 py-3 flex items-center">
-                            <a href="/user-update?{% for key, value in row.items() %}{{ key }}={{ value }}{% if not loop.last %}&{% endif %}{% endfor %}"
+                            <a href="/user-update/${val.User_ID}"
                                 class="font-medium text-green-600 hover:underline" id="user_edit_tooltip">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -65,7 +66,7 @@ async function getAllUsers() {
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </a>
-                            <a href="/user-management-delete?{% for key, value in row.items() %}{{ key }}={{ value }}{% if not loop.last %}&{% endif %}{% endfor %}"
+                            <button onclick="userDelete('${val.User_ID}')"
                                 class="ml-6 font-medium text-green-600 hover:underline" id="user_delete_tooltip">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -86,9 +87,9 @@ async function getAllUsers() {
                                     <path opacity="0.34" d="M9.5 12.5H14.5" stroke="red" stroke-width="1.5"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </a>
+                            </button>
 
-                            <a href="/user-rest?{% for key, value in row.items() %}{{ key }}={{ value }}{% if not loop.last %}&{% endif %}{% endfor %}"
+                            <a href="/user-reset/${val.User_ID}"
                                 class="ml-6 font-medium  hover:underline" id="user_reset_password_tooltip">
                                 <svg fill="#000000" width="26px" height="26px" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -103,13 +104,99 @@ async function getAllUsers() {
             })
 
             user_management_tbody.innerHTML = users;
+
+        }else{
+
+            loader.classList.remove('active');
+
+            notyf.error({
+                message: 'Something went wrong! getting data',
+                duration: 5000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            })
         }
 
     } catch (error) {
 
+        loader.classList.remove('active');
         const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
-        console.log(resErr);
+        notyf.error({
+            message: resErr,
+            duration: 5000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            dismissible: true
+        })
     }
 }
 
 getAllUsers();
+
+
+
+async function userDelete(id) {
+
+    try {
+
+        if (id) {
+
+            const a_token = sessionStorage.getItem('alubee');
+
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${a_token}`
+                }
+            }
+
+            const { data } = await axios.delete(`${hostUrl}/user/${id}`, config);
+
+            if (data?.success) {
+                getAllUsers();
+
+            } else {
+
+                notyf.error({
+                    message: 'Something went wrong to delete!',
+                    duration: 5000,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                    dismissible: true
+                })
+            }
+
+        } else {
+
+            notyf.error({
+                message: 'ID is required to delete!',
+                duration: 5000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            })
+        }
+        
+    } catch (error) {
+        const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
+        
+        notyf.error({
+            message: resErr,
+            duration: 5000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            dismissible: true
+        })
+    }
+}
