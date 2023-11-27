@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/user_management.css">
+    <link rel="stylesheet" href="/css/lib/notyf.css">
+    <script src="/lib/tailwindcss.js"></script>
+    <script src="/lib/axios.js"></script>
+    <script src="/lib/notyf.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+<body>
+
+
+    <!-- Navbar -->
+    <div class="md:px-7 px-3 fixed top-0 left-0 w-full z-20 bg-white">
+        <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center">
+
+                <!-- Logo -->
+                <a href="/dashboard" class="order-2 md:order-1 md:ml-0 ml-10">
+                    <img src="/img/logo.png" alt="" class="w-20 h-[70px] object-contain">
+                </a>
+                <div class="text-lg font-bold uppercase ml-10 md:block hidden order-2">Admin Dashboard</div>
+                <div id="hamburger_btn"
+                    class="md:hidden block md:order-2 order-1 md:mt-0 mt-3 ml-0 md:ml-10 h-fit bg-[#ddeee5] hover:bg-[#00a651] p-1.5 rounded cursor-pointer hamburger_div">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                        class="hamburger_icon" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="tabler-icon tabler-icon-menu-2">
+                        <path d="M4 6l16 0"></path>
+                        <path d="M4 12l16 0"></path>
+                        <path d="M4 18l16 0"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="">
+                <div class="flex items-center">
+                    <div class="bg-[#ddeee5] hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" class="tabler-icon tabler-icon-bell">
+                            <path
+                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
+                            </path>
+                            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                        </svg>
+                    </div>
+                    <div class="md:block hidden bg-[#F2F3F3] hover:bg-[#ddeee5] p-1.5 rounded cursor-pointer md:mx-3 fullscreen"
+                        id="fullscreen_btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="tabler-icon tabler-icon-arrows-maximize">
+                            <path d="M16 4l4 0l0 4"></path>
+                            <path d="M14 10l6 -6"></path>
+                            <path d="M8 20l-4 0l0 -4"></path>
+                            <path d="M4 20l6 -6"></path>
+                            <path d="M16 20l4 0l0 -4"></path>
+                            <path d="M14 14l6 6"></path>
+                            <path d="M8 4l-4 0l0 4"></path>
+                            <path d="M4 4l6 6"></path>
+                        </svg>
+                    </div>
+                    <a href="/profile" id="profile_initial"
+                        class=" w-9 h-9 flex uppercase items-center bg-[#ddeee5] text-sm font-bold text-center flex justify-center hover:bg-[#00a651] hover:text-white cursor-pointer p-1.5 rounded-full profile_div">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- sidebar mobile responsive -->
+        <div class="sidebar_mobile_container md:hidden" id="sidebar_mobile_container">
+            <div class="sidebar_mobile">
+                <div class="h-full p-5 md:px-3 md:py-4  overflow-y-auto bg-white-50 text-black">
+                    <a href="/dashboard" class="flex justify-center items-center mb-6">
+                        <img src="/img/logo.png" alt="" class="w-20 h-[70px] object-contain">
+                    </a>
+                    <ul>
+                        <% if(user==='Owner' || user==='Editor' || user==='Viewer' ){ %>
+                        <li class="mb-2" id="live_dashboard_mob_nav">
+                            <a href="/dashboard"
+                                class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                                <svg fill="#000000" class="mr-3" width="23px" height="23px" viewBox="0 0 24 24"
+                                    id="dashboard" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
+                                    class="icon line-color">
+                                    <path id="secondary"
+                                        d="M21,7V4a1,1,0,0,0-1-1H15a1,1,0,0,0-1,1V7a1,1,0,0,0,1,1h5A1,1,0,0,0,21,7ZM10,20V17a1,1,0,0,0-1-1H4a1,1,0,0,0-1,1v3a1,1,0,0,0,1,1H9A1,1,0,0,0,10,20Z"
+                                        style="fill: none; stroke: #00a651; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                    </path>
+                                    <path id="primary"
+                                        d="M9,12H4a1,1,0,0,1-1-1V4A1,1,0,0,1,4,3H9a1,1,0,0,1,1,1v7A1,1,0,0,1,9,12Zm12,8V13a1,1,0,0,0-1-1H15a1,1,0,0,0-1,1v7a1,1,0,0,0,1,1h5A1,1,0,0,0,21,20Z"
+                                        style="fill: none; stroke: #BCBEC0; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                    </path>
+                                </svg>
+                                Live Dashboard
+                            </a>
+                        </li>
+                        <% } %>
+
+                        <% if(user==='Owner' || user==='Editor' || user==='Viewer' ){ %>
+                        <li class="mb-2" id="report_mob_nav">
+                            <a href="/reports"
+                                class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                                <svg fill="#000000" width="23px" height="23px" class="mr-3" viewBox="0 0 24 24"
+                                    id="report-pie-chart-3" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
+                                    class="icon line-color">
+                                    <path id="primary"
+                                        d="M16,17v3a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V4A1,1,0,0,1,4,3H15a1,1,0,0,1,1,1V7"
+                                        style="fill: none; stroke: #00a651; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                    </path>
+                                    <path id="secondary"
+                                        d="M16,7a5,5,0,1,0,5,5A5,5,0,0,0,16,7Zm5,5H16V7A5,5,0,0,1,21,12Z"
+                                        style="fill: none; stroke: #BCBEC0; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                    </path>
+                                </svg>
+                                Reports
+                            </a>
+                        </li>
+                        <% } %>
+
+                        <% if(user==='Owner' || user==='Editor' ){ %>
+                        <li class="mb-2" id="work_order_mob_nav">
+                            <a href="/work-order"
+                                class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                                <svg fill="#000000" width="23px" class="mr-3" height="23px" viewBox="0 0 24 24"
+                                    id="work" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
+                                    class="icon line-color">
+                                    <path id="primary"
+                                        d="M16,4a1,1,0,0,0-1-1H9A1,1,0,0,0,8,4V7h8Zm5,16V8a1,1,0,0,0-1-1H4A1,1,0,0,0,3,8V20a1,1,0,0,0,1,1H20A1,1,0,0,0,21,20Z"
+                                        style="fill: none; stroke: #00a651; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                    </path>
+                                    <path id="secondary"
+                                        d="M11,14H8.64A4,4,0,0,1,5,11.58L3.18,7.43A1,1,0,0,1,4,7H20a1,1,0,0,1,.82.43L19,11.58A4,4,0,0,1,15.36,14H13"
+                                        style="fill: none; stroke: #BCBEC0; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                    </path>
+                                    <rect id="primary-2" data-name="primary" x="11" y="13" width="2" height="2"
+                                        style="fill: none; stroke: #00a651; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                    </rect>
+                                </svg>
+                                Work Orders
+                            </a>
+                        </li>
+                        <% } %>
+
+                        <% if(user==='Owner'){ %>
+                        <li class="mb-2" id="device_manager_mob_nav">
+                            <a href="/device-manager"
+                                class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                                <svg width="23px" height="23px" class="mr-3" viewBox="0 0 16 16" id="device-16px"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect id="Retângulo_223" data-name="Retângulo 223" width="16" height="16"
+                                        fill="#ccc" opacity="0" />
+                                    <g id="Icone" transform="translate(0.648 0.648)">
+                                        <g id="Retângulo_203" data-name="Retângulo 203"
+                                            transform="translate(2.352 2.352)" fill="none" stroke="#00a651"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+                                            <rect width="10" height="10" stroke="none" />
+                                            <rect x="0.5" y="0.5" width="9" height="9" fill="none" />
+                                        </g>
+                                        <g id="Retângulo_206" data-name="Retângulo 206"
+                                            transform="translate(5.352 5.352)" fill="none" stroke="#00a651"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+                                            <rect width="4" height="4" stroke="none" />
+                                            <rect x="0.5" y="0.5" width="3" height="3" fill="none" />
+                                        </g>
+                                        <g id="Grupo_327" data-name="Grupo 327" transform="translate(-0.191 1)">
+                                            <line id="Linha_24" data-name="Linha 24" y1="3"
+                                                transform="translate(5.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                            <line id="Linha_28" data-name="Linha 28" y1="3"
+                                                transform="translate(7.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                            <line id="Linha_29" data-name="Linha 29" y1="3"
+                                                transform="translate(9.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                        </g>
+                                        <g id="Grupo_328" data-name="Grupo 328" transform="translate(-0.191 -11)">
+                                            <line id="Linha_24-2" data-name="Linha 24" y1="3"
+                                                transform="translate(5.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                            <line id="Linha_28-2" data-name="Linha 28" y1="3"
+                                                transform="translate(7.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                            <line id="Linha_29-2" data-name="Linha 29" y1="3"
+                                                transform="translate(9.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                        </g>
+                                        <g id="Grupo_329" data-name="Grupo 329"
+                                            transform="translate(1 14.895) rotate(-90)">
+                                            <line id="Linha_24-3" data-name="Linha 24" y1="3"
+                                                transform="translate(5.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                            <line id="Linha_28-3" data-name="Linha 28" y1="3"
+                                                transform="translate(7.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                            <line id="Linha_29-3" data-name="Linha 29" y1="3"
+                                                transform="translate(9.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                        </g>
+                                        <g id="Grupo_330" data-name="Grupo 330"
+                                            transform="translate(-11 14.895) rotate(-90)">
+                                            <line id="Linha_24-4" data-name="Linha 24" y1="3"
+                                                transform="translate(5.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                            <line id="Linha_28-4" data-name="Linha 28" y1="3"
+                                                transform="translate(7.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                            <line id="Linha_29-4" data-name="Linha 29" y1="3"
+                                                transform="translate(9.543 10.852)" fill="none" stroke="#BCBEC0"
+                                                stroke-linecap="round" stroke-width="1" />
+                                        </g>
+                                    </g>
+                                </svg>
+                                Device Manager
+                            </a>
+                        </li>
+                        <% } %>
+
+                        <% if(user==='Owner'){ %>
+                        <li class="mb-2" id="user_management_mob_nav">
+                            <a href="/user-management"
+                                class="flex items-center bg-[#ddeee5] font-medium py-3 px-5 text-sm  rounded-full">
+                                <svg width="23px" height="23px" class="mr-3" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="9" cy="6" r="4" stroke="#00a651" stroke-width="1.5" />
+                                    <path opacity="0.5"
+                                        d="M12.5 4.3411C13.0375 3.53275 13.9565 3 15 3C16.6569 3 18 4.34315 18 6C18 7.65685 16.6569 9 15 9C13.9565 9 13.0375 8.46725 12.5 7.6589"
+                                        stroke="#BCBEC0" stroke-width="1.5" />
+                                    <ellipse cx="9" cy="17" rx="7" ry="4" stroke="#00a651" stroke-width="1.5" />
+                                    <path opacity="0.5"
+                                        d="M18 14C19.7542 14.3847 21 15.3589 21 16.5C21 17.5293 19.9863 18.4229 18.5 18.8704"
+                                        stroke="#BCBEC0" stroke-width="1.5" stroke-linecap="round" />
+                                </svg>
+                                User Management
+                            </a>
+                        </li>
+                        <% } %>
+                        
+                        <li class="mb-2">
+                            <button
+                                id="mob_logout_btn"
+                                class="flex items-center hover:bg-[#ffe5e5] hover:font-medium py-3 px-5 text-sm w-full rounded-full">
+                                <svg width="23px" height="23px" class="mr-3" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.5"
+                                        d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17"
+                                        stroke="red" stroke-width="1.5" stroke-linecap="round" />
+                                    <path d="M15 12L2 12M2 12L5.5 9M2 12L5.5 15" stroke="#BCBEC0" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                Logout
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Sidebar for desktop  -->
+    <aside id="sidebar-multi-level-sidebar"
+        class="fixed top-[75px] left-0 z-40 md:w-64 w-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        aria-label="Sidebar">
+        <div class="h-full md:px-3 md:py-4 mt-5 overflow-y-auto bg-white-50 text-black">
+            <ul>
+                <% if(user==='Owner' || user==='Editor' || user === 'Viewer' ){ %>
+                <li class="mb-2" id="live_dashboard_nav">
+                    <a href="/dashboard"
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                        <svg fill="#000000" class="mr-3" width="23px" height="23px" viewBox="0 0 24 24" id="dashboard"
+                            data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color">
+                            <path id="secondary"
+                                d="M21,7V4a1,1,0,0,0-1-1H15a1,1,0,0,0-1,1V7a1,1,0,0,0,1,1h5A1,1,0,0,0,21,7ZM10,20V17a1,1,0,0,0-1-1H4a1,1,0,0,0-1,1v3a1,1,0,0,0,1,1H9A1,1,0,0,0,10,20Z"
+                                style="fill: none; stroke: #00a651; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                            </path>
+                            <path id="primary"
+                                d="M9,12H4a1,1,0,0,1-1-1V4A1,1,0,0,1,4,3H9a1,1,0,0,1,1,1v7A1,1,0,0,1,9,12Zm12,8V13a1,1,0,0,0-1-1H15a1,1,0,0,0-1,1v7a1,1,0,0,0,1,1h5A1,1,0,0,0,21,20Z"
+                                style="fill: none; stroke: #BCBEC0; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                            </path>
+                        </svg>
+                        Live Dashboard
+                    </a>
+                </li>
+                <% } %>
+
+                <% if(user==='Owner' || user ==='Editor' || user === 'Viewer' ){ %>
+                <li class="mb-2" id="report_nav">
+                    <a href="/reports"
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                        <svg fill="#000000" width="23px" height="23px" class="mr-3" viewBox="0 0 24 24"
+                            id="report-pie-chart-3" data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
+                            class="icon line-color">
+                            <path id="primary"
+                                d="M16,17v3a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V4A1,1,0,0,1,4,3H15a1,1,0,0,1,1,1V7"
+                                style="fill: none; stroke: #00a651; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                            </path>
+                            <path id="secondary" d="M16,7a5,5,0,1,0,5,5A5,5,0,0,0,16,7Zm5,5H16V7A5,5,0,0,1,21,12Z"
+                                style="fill: none; stroke: #BCBEC0; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                            </path>
+                        </svg>
+                        Reports
+                    </a>
+                </li>
+                <% } %>
+
+                <% if(user === 'Owner' || user === 'Editor'){ %>
+                <li class="mb-2" id="work_order_nav">
+                    <a href="/work-order"
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                        <svg fill="#000000" width="23px" class="mr-3" height="23px" viewBox="0 0 24 24" id="work"
+                            data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color">
+                            <path id="primary"
+                                d="M16,4a1,1,0,0,0-1-1H9A1,1,0,0,0,8,4V7h8Zm5,16V8a1,1,0,0,0-1-1H4A1,1,0,0,0,3,8V20a1,1,0,0,0,1,1H20A1,1,0,0,0,21,20Z"
+                                style="fill: none; stroke: #00a651; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                            </path>
+                            <path id="secondary"
+                                d="M11,14H8.64A4,4,0,0,1,5,11.58L3.18,7.43A1,1,0,0,1,4,7H20a1,1,0,0,1,.82.43L19,11.58A4,4,0,0,1,15.36,14H13"
+                                style="fill: none; stroke: #BCBEC0; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                            </path>
+                            <rect id="primary-2" data-name="primary" x="11" y="13" width="2" height="2"
+                                style="fill: none; stroke: #00a651; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                            </rect>
+                        </svg>
+                        Work Orders
+                    </a>
+                </li>
+                <% } %>
+                
+                <% if(user==='Owner'){ %>
+                <li class="mb-2" id="device_manager_nav">
+                    <a href="/device-manager"
+                        class="flex items-center hover:bg-[#ddeee5] hover:font-medium py-3 px-5 text-sm  rounded-full">
+                        <svg width="23px" height="23px" class="mr-3" viewBox="0 0 16 16" id="device-16px"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect id="Retângulo_223" data-name="Retângulo 223" width="16" height="16" fill="#ccc"
+                                opacity="0" />
+                            <g id="Icone" transform="translate(0.648 0.648)">
+                                <g id="Retângulo_203" data-name="Retângulo 203" transform="translate(2.352 2.352)"
+                                    fill="none" stroke="#00a651" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1">
+                                    <rect width="10" height="10" stroke="none" />
+                                    <rect x="0.5" y="0.5" width="9" height="9" fill="none" />
+                                </g>
+                                <g id="Retângulo_206" data-name="Retângulo 206" transform="translate(5.352 5.352)"
+                                    fill="none" stroke="#00a651" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1">
+                                    <rect width="4" height="4" stroke="none" />
+                                    <rect x="0.5" y="0.5" width="3" height="3" fill="none" />
+                                </g>
+                                <g id="Grupo_327" data-name="Grupo 327" transform="translate(-0.191 1)">
+                                    <line id="Linha_24" data-name="Linha 24" y1="3" transform="translate(5.543 10.852)"
+                                        fill="none" stroke="#BCBEC0" stroke-linecap="round" stroke-width="1" />
+                                    <line id="Linha_28" data-name="Linha 28" y1="3" transform="translate(7.543 10.852)"
+                                        fill="none" stroke="#BCBEC0" stroke-linecap="round" stroke-width="1" />
+                                    <line id="Linha_29" data-name="Linha 29" y1="3" transform="translate(9.543 10.852)"
+                                        fill="none" stroke="#BCBEC0" stroke-linecap="round" stroke-width="1" />
+                                </g>
+                                <g id="Grupo_328" data-name="Grupo 328" transform="translate(-0.191 -11)">
+                                    <line id="Linha_24-2" data-name="Linha 24" y1="3"
+                                        transform="translate(5.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                    <line id="Linha_28-2" data-name="Linha 28" y1="3"
+                                        transform="translate(7.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                    <line id="Linha_29-2" data-name="Linha 29" y1="3"
+                                        transform="translate(9.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                </g>
+                                <g id="Grupo_329" data-name="Grupo 329" transform="translate(1 14.895) rotate(-90)">
+                                    <line id="Linha_24-3" data-name="Linha 24" y1="3"
+                                        transform="translate(5.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                    <line id="Linha_28-3" data-name="Linha 28" y1="3"
+                                        transform="translate(7.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                    <line id="Linha_29-3" data-name="Linha 29" y1="3"
+                                        transform="translate(9.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                </g>
+                                <g id="Grupo_330" data-name="Grupo 330" transform="translate(-11 14.895) rotate(-90)">
+                                    <line id="Linha_24-4" data-name="Linha 24" y1="3"
+                                        transform="translate(5.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                    <line id="Linha_28-4" data-name="Linha 28" y1="3"
+                                        transform="translate(7.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                    <line id="Linha_29-4" data-name="Linha 29" y1="3"
+                                        transform="translate(9.543 10.852)" fill="none" stroke="#BCBEC0"
+                                        stroke-linecap="round" stroke-width="1" />
+                                </g>
+                            </g>
+                        </svg>
+                        Device Manager
+                    </a>
+                </li>
+                <% } %>
+
+                <% if(user==='Owner' ){ %>
+                <li class="mb-2" id="user_management_nav">
+                    <a href="/user-management"
+                        class="flex items-center bg-[#ddeee5] font-medium py-3 px-5 text-sm  rounded-full">
+                        <svg width="23px" height="23px" class="mr-3" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9" cy="6" r="4" stroke="#00a651" stroke-width="1.5" />
+                            <path opacity="0.5"
+                                d="M12.5 4.3411C13.0375 3.53275 13.9565 3 15 3C16.6569 3 18 4.34315 18 6C18 7.65685 16.6569 9 15 9C13.9565 9 13.0375 8.46725 12.5 7.6589"
+                                stroke="#BCBEC0" stroke-width="1.5" />
+                            <ellipse cx="9" cy="17" rx="7" ry="4" stroke="#00a651" stroke-width="1.5" />
+                            <path opacity="0.5"
+                                d="M18 14C19.7542 14.3847 21 15.3589 21 16.5C21 17.5293 19.9863 18.4229 18.5 18.8704"
+                                stroke="#BCBEC0" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                        User Management
+                    </a>
+                </li>
+                <% } %>
+
+                <li class="mb-2">
+                    <button
+                        id="logout_btn"
+                        class="flex items-center hover:bg-[#ffe5e5] hover:font-medium py-3 px-5 text-sm w-full  rounded-full">
+                        <svg width="23px" height="23px" class="mr-3" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0.5"
+                                d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17"
+                                stroke="red" stroke-width="1.5" stroke-linecap="round" />
+                            <path d="M15 12L2 12M2 12L5.5 9M2 12L5.5 15" stroke="#BCBEC0" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Logout
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+
+
+    <div class="md:ml-64 ml-0 mt-[80px] z-0">
+        <div class="ml-2 md:mr-4 mr-2 p-4 rounded-lg bg-[#F3F3F8] h-screen">
+
+            <div class="bg-white p-3 rounded-lg shadow-sm">
+                <h2 class="text-lg font-bold text-center my-5">Password Reset</h2>
+            
+                <section id="loader">
+                    <span class="loader"></span>
+                </section>
+
+                <div class="mt-8" id="user_reset_div">
+                    <form id="user_reset_form">
+                        <input type="hidden" name="user_id" id="user_id">
+                        <div class="grid lg:grid-cols-3 gap-3">
+                            <div class="">
+                                <label for="user_email" class="block mb-2 text-sm font-medium text-gray-900">Email <span
+                                        class="text-red-500">*</span></label>
+                                <input type="email" id="user_email"
+                                    class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                                    name="user_email" required>
+                            </div>
+                            <div class="">
+                                <label for="user_password" class="block mb-2 text-sm font-medium text-gray-900">Password <span
+                                        class="text-red-500">*</span></label>
+                                <div class="password_container">
+                                    <input type="password" id="user_password"
+                                        class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                                        name="user_password" required>
+                                    <span><i id="user_password_toggler" class="fa-regular fa-eye"></i></span>
+                                </div>
+                                <div class="mt-0.5 flex justify-end text-sm font-medium" id="password_err-msg"></div>
+                            </div>
+                            <div class="">
+                                <label for="user_cpassword" class="block mb-2 text-sm font-medium text-gray-900">Confirm Password <span
+                                        class="text-red-500">*</span></label>
+                                <div class="password_container">
+                                    <input type="password" id="user_cpassword"
+                                        class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                                        name="user_cpassword" required>
+                                    <span><i id="user_cpassword_toggler" class="fa-regular fa-eye"></i></span>
+                                </div>
+                                <div class="mt-0.5 flex justify-end text-sm font-medium" id="cpassword_err-msg"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <a href="/user-management"
+                                class="flex items-center text-white mt-6 bg-black hover:shadow-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-500 font-medium rounded shadow text-sm w-fit pr-4 pl-3 py-2.5 text-center mr-4">
+                                <svg class="mr-1" width="20px" height="20px" viewBox="0 0 24 24" fill="#ffffff"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M4 10L3.64645 10.3536L3.29289 10L3.64645 9.64645L4 10ZM20.5 18C20.5 18.2761 20.2761 18.5 20 18.5C19.7239 18.5 19.5 18.2761 19.5 18L20.5 18ZM8.64645 15.3536L3.64645 10.3536L4.35355 9.64645L9.35355 14.6464L8.64645 15.3536ZM3.64645 9.64645L8.64645 4.64645L9.35355 5.35355L4.35355 10.3536L3.64645 9.64645ZM4 9.5L14 9.5L14 10.5L4 10.5L4 9.5ZM20.5 16L20.5 18L19.5 18L19.5 16L20.5 16ZM14 9.5C17.5898 9.5 20.5 12.4101 20.5 16L19.5 16C19.5 12.9624 17.0376 10.5 14 10.5L14 9.5Z"
+                                        fill="#ffffff" />
+                                </svg>
+                                Go Back
+                            </a>
+                            <button type="submit"
+                                class="flex items-center text-white mt-6 bg-[#00a651] hover:shadow-lg hover:bg-[#00803e] focus:ring-4 focus:outline-none focus:ring-green-600 font-medium rounded shadow text-sm w-fit pr-4 pl-3 py-2.5 text-center"
+                                name="submitButton" value="submit1">
+                                <svg class="mr-1" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10.5 15.25C10.307 15.2353 10.1276 15.1455 9.99998 15L6.99998 12C6.93314 11.8601 6.91133 11.7029 6.93756 11.55C6.96379 11.3971 7.03676 11.2562 7.14643 11.1465C7.2561 11.0368 7.39707 10.9638 7.54993 10.9376C7.70279 10.9114 7.86003 10.9332 7.99998 11L10.47 13.47L19 5.00004C19.1399 4.9332 19.2972 4.91139 19.45 4.93762C19.6029 4.96385 19.7439 5.03682 19.8535 5.14649C19.9632 5.25616 20.0362 5.39713 20.0624 5.54999C20.0886 5.70286 20.0668 5.86009 20 6.00004L11 15C10.8724 15.1455 10.6929 15.2353 10.5 15.25Z"
+                                        fill="#ffffff" />
+                                    <path
+                                        d="M12 21C10.3915 20.9974 8.813 20.5638 7.42891 19.7443C6.04481 18.9247 4.90566 17.7492 4.12999 16.34C3.54037 15.29 3.17596 14.1287 3.05999 12.93C2.87697 11.1721 3.2156 9.39921 4.03363 7.83249C4.85167 6.26578 6.1129 4.9746 7.65999 4.12003C8.71001 3.53041 9.87134 3.166 11.07 3.05003C12.2641 2.92157 13.4719 3.03725 14.62 3.39003C14.7224 3.4105 14.8195 3.45215 14.9049 3.51232C14.9903 3.57248 15.0622 3.64983 15.116 3.73941C15.1698 3.82898 15.2043 3.92881 15.2173 4.03249C15.2302 4.13616 15.2214 4.2414 15.1913 4.34146C15.1612 4.44152 15.1105 4.53419 15.0425 4.61352C14.9745 4.69286 14.8907 4.75712 14.7965 4.80217C14.7022 4.84723 14.5995 4.87209 14.4951 4.87516C14.3907 4.87824 14.2867 4.85946 14.19 4.82003C13.2186 4.52795 12.1987 4.43275 11.19 4.54003C10.193 4.64212 9.22694 4.94485 8.34999 5.43003C7.50512 5.89613 6.75813 6.52088 6.14999 7.27003C5.52385 8.03319 5.05628 8.91361 4.77467 9.85974C4.49307 10.8059 4.40308 11.7987 4.50999 12.78C4.61208 13.777 4.91482 14.7431 5.39999 15.62C5.86609 16.4649 6.49084 17.2119 7.23999 17.82C8.00315 18.4462 8.88357 18.9137 9.8297 19.1953C10.7758 19.4769 11.7686 19.5669 12.75 19.46C13.747 19.3579 14.713 19.0552 15.59 18.57C16.4349 18.1039 17.1818 17.4792 17.79 16.73C18.4161 15.9669 18.8837 15.0864 19.1653 14.1403C19.4469 13.1942 19.5369 12.2014 19.43 11.22C19.4201 11.1169 19.4307 11.0129 19.461 10.9139C19.4914 10.8149 19.5409 10.7228 19.6069 10.643C19.6728 10.5631 19.7538 10.497 19.8453 10.4485C19.9368 10.3999 20.0369 10.3699 20.14 10.36C20.2431 10.3502 20.3471 10.3607 20.4461 10.3911C20.5451 10.4214 20.6372 10.471 20.717 10.5369C20.7969 10.6028 20.863 10.6839 20.9115 10.7753C20.9601 10.8668 20.9901 10.9669 21 11.07C21.1821 12.829 20.842 14.6026 20.0221 16.1695C19.2022 17.7363 17.9389 19.0269 16.39 19.88C15.3288 20.4938 14.1495 20.8755 12.93 21C12.62 21 12.3 21 12 21Z"
+                                        fill="#ffffff" />
+                                </svg>
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/authCheck.js"></script>
+    <script src="/js/user_reset.js"></script>
+    <script src="/js/script.js"></script>
+
+</body>
+
+</html>
