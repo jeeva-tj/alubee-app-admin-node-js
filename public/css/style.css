@@ -126,53 +126,8 @@ select:-webkit-autofill:focus {
     z-index: -1;
 }
 
-.password_container {
-    position: relative;
-}
 
-.password_container #toggler {
-    position: absolute;
-    top: 14px;
-    right: 10px;
-    content: '';
-    display: flex;
-}
-.password_container #emp_password_toggler {
-    position: absolute;
-    top: 14px;
-    right: 10px;
-    content: '';
-    display: flex;
-}
-.password_container #emp_cp_toggler {
-    position: absolute;
-    top: 14px;
-    right: 10px;
-    content: '';
-    display: flex;
-}
-.password_container #emp_u_password_toggler {
-    position: absolute;
-    top: 14px;
-    right: 10px;
-    content: '';
-    display: flex;
-}
-.password_container #emp_cu_password_toggler {
-    position: absolute;
-    top: 14px;
-    right: 10px;
-    content: '';
-    display: flex;
-}
 
-.password_container .fa-eye {
-    color: rgb(170, 170, 170);
-}
-
-.password_container .fa-eye-slash {
-    color: lightsalmon;
-}
 
 /* ========================================================================== */
 
