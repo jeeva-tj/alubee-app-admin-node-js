@@ -8,8 +8,10 @@
     <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/user_management.css">
+    <link rel="stylesheet" href="/css/lib/notyf.css">
     <script src="/lib/tailwindcss.js"></script>
     <script src="/lib/axios.js"></script>
+    <script src="/lib/notyf.js"></script>
 </head>
 <body>
 
@@ -439,7 +441,7 @@
 
 
     <div class="md:ml-64 ml-0 mt-[80px] z-0">
-        <div class="ml-2 md:mr-4 mr-2 p-4 rounded-lg bg-[#F3F3F8] h-screen">
+        <div class="ml-2 md:mr-4 mr-2 p-4 rounded-lg bg-[#F3F3F8] ">
 
             <div class="bg-white p-3 rounded-lg flex justify-between items-center mb-3">
                 <h2 class="text-xl font-bold">User List</h2>
@@ -458,9 +460,9 @@
                 <span class="loader"></span>
             </section>
 
-            <div class="relative overflow-x-scroll shadow-md sm:rounded-lg" id="user_management_table">
+            <div class="relative overflow-x-scroll sm:rounded-lg tableFixHead" id="user_management_table">
                 <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                         <tr>
                             <th scope="col" class="px-4 py-3">User ID</th>
                             <th scope="col" class="px-4 py-3">Name</th>
@@ -480,25 +482,7 @@
     <script src="/js/authCheck.js"></script>
     <script src="/js/user_management.js"></script>
     <script src="/js/script.js"></script>
-    <script src="/lib/tooltip/popper.js"></script>
-    <script src="/lib/tooltip/tippy.js"></script>
-
-    <script>
-        // edit tooltip
-        tippy('#user_edit_tooltip', {
-            content: "Edit",
-        })
-
-        // delete tooltip
-        tippy('#user_delete_tooltip', {
-            content: "Delete",
-        })
-
-        // reset password tooltip
-        tippy('#user_reset_password_tooltip', {
-            content: "Reset Password",
-        })
-    </script>
+   
 
 </body>
 
