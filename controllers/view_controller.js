@@ -37,6 +37,19 @@ const workOrderUpdatePage = (req, res) => {
     res.render('work_order_update', { user: req?.session?.user?.role })
 }
 
+const userAddPage = (req, res) => {
+    res.render('user_add', { user: req?.session?.user?.role })
+}
+
+const userUpdatePage = (req, res) => {
+    res.render('user_update', { user: req?.session?.user?.role })
+}
+
+
+const userResetPage = (req, res) => {
+    res.render('user_reset', { user: req?.session?.user?.role })
+}
+
 export {
     loginPage,
     dashboardPage,
@@ -45,5 +58,8 @@ export {
     deviceMangerPage,
     userManagementPage,
     workOrderAddPage,
-    workOrderUpdatePage
+    workOrderUpdatePage,
+    userAddPage,
+    userUpdatePage,
+    userResetPage
 }
