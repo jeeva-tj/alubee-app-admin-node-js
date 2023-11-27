@@ -90,12 +90,32 @@ async function getAllWorkOrders() {
             })
 
             work_order_tbody.innerHTML = workOrders;
+        }else{
+
+            loader.classList.remove('active');
+            notyf.error({
+                message: 'Something wrong!',
+                duration: 5000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            })
         }
 
     } catch (error) {
-
+        loader.classList.remove('active');
         const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
-        console.log(resErr);
+        notyf.error({
+            message: resErr,
+            duration: 5000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            dismissible: true
+        })
     }
 }
 
@@ -106,26 +126,41 @@ getAllWorkOrders();
 
 async function work_order_delete(id){
 
-    if (id) {
+    try {
         
-        const a_token = sessionStorage.getItem('alubee');
+        if (id) {
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${a_token}`
+            const a_token = sessionStorage.getItem('alubee');
+
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${a_token}`
+                }
             }
-        }
 
-        const { data } = await axios.delete(`${hostUrl}/work-order/${id}`, config);
+            const { data } = await axios.delete(`${hostUrl}/work-order/${id}`, config);
 
-        if (data?.success) {
-            getAllWorkOrders();
+            if (data?.success) {
+                getAllWorkOrders();
 
-        }else{
+            } else {
+
+                notyf.error({
+                    message: 'Something went wrong to delete!',
+                    duration: 3000,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                    dismissible: true
+                })
+            }
+
+        } else {
 
             notyf.error({
-                message: 'Something went wrong to delete!',
+                message: 'ID is required to delete!',
                 duration: 3000,
                 position: {
                     x: 'right',
@@ -135,11 +170,13 @@ async function work_order_delete(id){
             })
         }
 
-    }else{
-
+    } catch (error) {
+        
+        loader.classList.remove('active');
+        const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
         notyf.error({
-            message: 'ID is required to delete!',
-            duration: 3000,
+            message: resErr,
+            duration: 5000,
             position: {
                 x: 'right',
                 y: 'top',
@@ -147,6 +184,8 @@ async function work_order_delete(id){
             dismissible: true
         })
     }
+
+    
 }
 
 
