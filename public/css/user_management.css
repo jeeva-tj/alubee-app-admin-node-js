@@ -51,3 +51,64 @@
 #user_management_table.active {
     display: none;
 }
+
+
+#user_update_div {
+    display: block;
+}
+
+#user_update_div.active {
+    display: none;
+}
+
+#user_reset_div {
+    display: block;
+}
+
+#user_reset_div.active {
+    display: none;
+}
+
+
+
+.password_container {
+    position: relative;
+}
+
+
+.password_container #user_password_toggler {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    content: '';
+    display: flex;
+}
+.password_container #user_cpassword_toggler {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    content: '';
+    display: flex;
+}
+
+.password_container .fa-eye {
+    color: rgb(170, 170, 170);
+}
+
+.password_container .fa-eye-slash {
+    color: lightsalmon;
+}
+
+
+.tableFixHead {
+    overflow: auto;
+    height: calc(100vh - 185px);
+}
+
+.tableFixHead thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+
