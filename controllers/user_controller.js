@@ -111,6 +111,20 @@ const newUser = asyncHandler(async (req, res) => {
         throw new Error('please add all details')
     }
 
+    const existEmail_query = `SELECT * FROM alubee_dataset.alubee_user_table WHERE Email='${email}'`;
+    const existEmail = await bigquery.query(existEmail_query);
+    if (existEmail[0][0]) {
+        res.status(400)
+        throw new Error('Email already exists!, Try new Email')
+    }
+
+    const existPhone_query = `SELECT * FROM alubee_dataset.alubee_user_table WHERE Phone='${phone}'`;
+    const existPhone = await bigquery.query(existPhone_query);
+    if (existPhone[0][0]) {
+        res.status(400)
+        throw new Error('Phone Number already exists!, Try another phone number')
+    }
+
     const getId_query = "SELECT MAX(User_ID) as user_id FROM alubee_dataset.alubee_user_table";
     const user_id = await bigquery.query(getId_query);
 
