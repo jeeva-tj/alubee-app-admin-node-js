@@ -9,6 +9,7 @@ const login_form = document.getElementById('login_form');
 const loader = document.getElementById('loader');
 const login_err_msg = document.getElementById('login_err_msg');
 
+const notyf = new Notyf();
 
 
 login_form.addEventListener('submit', async (e) => {
@@ -21,18 +22,9 @@ login_form.addEventListener('submit', async (e) => {
             password: login_password.value
         }
 
-        // const config = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(data)
-        // }
-
         loader.classList.add('active');
 
         const { data } = await axios.post(`${hostUrl}/login`, login_data);
-        // const res = await fetchApi.json()
 
         if (data?.token) {
             loader.classList.remove('active');
@@ -47,14 +39,32 @@ login_form.addEventListener('submit', async (e) => {
             }
         }else{
             loader.classList.remove('active');
-            login_err_msg.innerHTML = `<div class="bg-[#F8D7D9] text-[#721C23] w-full p-2 text-center text-sm font-medium rounded mb-3">Something went wrong!</div>`;
+            // login_err_msg.innerHTML = `<div class="bg-[#F8D7D9] text-[#721C23] w-full p-2 text-center text-sm font-medium rounded mb-3">Something went wrong!</div>`;
+            notyf.error({
+                message: 'Something went wrong!',
+                duration: 5000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            })
         }
         
         
     } catch (error) {
         loader.classList.remove('active');
-        const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
-        login_err_msg.innerHTML = `<div class="bg-[#F8D7D9] text-[#721C23] w-full p-2 text-center text-sm font-medium rounded mb-3">${resErr}</div>`;
+        const resErr = error.response && error.response.data.message ? error.response.data.message : error.message;
+        notyf.error({
+            message: resErr,
+            duration: 5000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            dismissible: true
+        })
+        // login_err_msg.innerHTML = `<div class="bg-[#F8D7D9] text-[#721C23] w-full p-2 text-center text-sm font-medium rounded mb-3">${resErr}</div>`;
     }
 })
 
