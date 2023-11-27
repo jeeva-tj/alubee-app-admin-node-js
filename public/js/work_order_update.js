@@ -143,7 +143,7 @@ work_order_update_form.addEventListener('submit', async (e) => {
 
             loader.classList.remove('active');
             notyf.error({
-                message: 'Something wrong!',
+                message: 'Something went wrong!',
                 duration: 3000,
                 position: {
                     x: 'right',
