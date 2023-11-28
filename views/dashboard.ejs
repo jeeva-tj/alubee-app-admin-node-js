@@ -62,7 +62,7 @@
                             <path d="M4 4l6 6"></path>
                         </svg>
                     </div>
-                    <a href="/profile" id="profile_initial"
+                    <a href="/admin/profile" id="profile_initial"
                         class=" w-9 h-9 flex uppercase items-center bg-[#ddeee5] text-sm font-bold text-center flex justify-center hover:bg-[#00a651] hover:text-white cursor-pointer p-1.5 rounded-full profile_div">
                     </a>
                 </div>
@@ -439,7 +439,7 @@
 
     <!-- Main Content body -->
     <div class="md:ml-64 ml-0 mt-[80px] z-0">
-        <div class="ml-2 md:mr-4 mr-2 p-3 rounded-lg bg-[#F3F3F8] h-auto">
+        <div class="ml-2 md:mr-4 mr-2 p-3 rounded-lg bg-[#F3F3F8] screen_height">
             <div class="flex justify-between lg:items-center lg:flex-row flex-col">
                 <div class="flex order-2 lg:order-1 md:flex-row flex-col">
                     <div class="flex items-center bg-white rounded shadow">
@@ -499,7 +499,7 @@
 
             <div class="lg:mt-3 mt-7">
                 <div class="grid xl:grid-cols-4 lg:grid-cols-2 grid-cols-1 gap-3">
-                    <div class="bg-[#dae9e2] py-4 px-3 rounded-lg shadow">
+                    <div class="bg-[#dae9e2] py-4 px-3 rounded-lg shadow w-full h-full">
                         <div class="flex  items-center">
                             <div class="bg-gray-100 p-3 rounded-full mr-5">
                                 <svg fill="#3F5189" width="30px" height="30px" viewBox="0 0 24 24" id="up-arrow-circle"
@@ -516,7 +516,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-[#f5d6ce]  py-4 px-3 rounded-lg shadow">
+                    <div class="bg-[#f5d6ce]  py-4 px-3 rounded-lg shadow w-full h-full">
                         <div class="flex items-center">
                             <div class="bg-gray-100 p-3 rounded-full mr-5">
                                 <svg fill="#3F5189" width="30px" height="30px" viewBox="0 0 24 24"
@@ -534,7 +534,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-[#cbe7f8] py-4 px-3 rounded-lg shadow">
+                    <div class="bg-[#cbe7f8] py-4 px-3 rounded-lg shadow w-full h-full">
                         <div class="flex items-center">
                             <div class="bg-gray-100 p-3 rounded-full mr-5">
                                 <svg fill="#3F5189" width="30px" height="30px" viewBox="0 0 24 24"
@@ -552,7 +552,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white py-4 px-3 rounded-lg shadow operator_detail">
+                    <div class="bg-white py-4 px-3 rounded-lg shadow operator_detail w-full h-full">
                         <div class="flex  items-center">
                             <div class="">
                                 <div class="flex items-center">
@@ -595,12 +595,14 @@
                 <div class="grid xl:grid-cols-3 grid-cols-1 gap-3">
                     <div class="bg-white pt-4 pr-4 pl-4 rounded xl:col-span-2">
                         <div class="text-md font-[500] mb-3 capitalize">Shot counts every last 5 hour</div>
-                        <div id="chart" class=""></div>
+                        <div id="chart" class="h-[310px]"></div>
                     </div>
                     <div class="w-full bg-white pt-4 pr-4 pl-4 pb-2 rounded">
                         <div class="text-md font-[500]  capitalize">Overall Equipment Effectiveness - <span
                                 class="font-bold text-sm">OEE</span></div>
-                        <div id="bar_chart" class="w-[330px] h-[230px] my-2"></div>
+                        <div class="flex justify-center">
+                            <div id="bar_chart" class="w-[330px] h-[225px] my-2"></div>
+                        </div>
                         <div class="mt-2">
                             <div class="flex items-center justify-between mb-1.5">
                                 <div class="">Availability</div>
