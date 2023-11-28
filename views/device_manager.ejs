@@ -442,11 +442,6 @@
                 <h2 class="text-xl font-bold">Device Manager</h2>
 
                 <div class="flex items-center">
-                    <div class="flex justify-end items-center mr-3">
-                        <input type="text" id="search" placeholder="Search..."
-                            class="border focus:outline-green-500 focus:ring-green-500 focus:border-green-500 text-sm shadow-sm py-2 px-3 rounded"
-                            oninput="filterTable()">
-                    </div>
                     <a href="/add_device_manager"
                         class="bg-[#00a651] hover:shadow-lg p-2 rounded shadow text-white text-sm font-medium flex items-center">
                         <svg width="20px" class="mr-1" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -588,58 +583,6 @@
 
     <script src="/js/authCheck.js"></script>
     <script src="/js/script.js"></script>
-    <script src="/lib/tooltip/popper.js"></script>
-    <script src="/lib/tooltip/tippy.js"></script>
 
-    <script>
-        // edit tooltip
-        tippy('#device_edit_tooltip', {
-            content: "Edit",
-        })
-
-        // delete tooltip
-        tippy('#device_delete_tooltip', {
-            content: "Delete",
-        })
-
-        function filterTable() {
-            // Get input value and convert to lowercase for case-insensitive comparison
-            var input = document.getElementById('search').value.toLowerCase();
-
-            // Get the table and table rows
-            var table = document.getElementById('myTable');
-            var rows = table.getElementsByTagName('tr');
-
-            // Loop through all table rows, starting from index 1 to skip the header row
-            for (var i = 1; i < rows.length; i++) {
-                // Get the cells in the current row
-                var cells = rows[i].getElementsByTagName('td');
-                var found = false;
-
-                // Loop through all cells in the current row
-                for (var j = 0; j < cells.length; j++) {
-                    // Get the text content of the cell and convert to lowercase
-                    var cellText = cells[j].textContent.toLowerCase();
-
-                    // Check if the input value is present in the cell's text
-                    if (cellText.includes(input)) {
-                        found = true;
-                        break;
-                    }
-                }
-
-                console.log(found);
-
-                if (found) {
-                    rows[i].style.display = 'table-row';
-                    // document.getElementById('data_msg').innerHTML = '';
-                } else {
-                    rows[i].style.display = 'none';
-                    // document.getElementById('data_msg').innerHTML = `<div class='py-5'>No records</div>`;
-                }
-            }
-        }
-    </script>
 </body>
-
 </html>
