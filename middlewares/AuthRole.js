@@ -35,6 +35,9 @@ const authRoleProtect = asyncHandler(async(req, res, next) => {
         } else if (req.route.path === '/user-reset/:id' && user.role === 'Owner') {
             next();
             
+        } else if (req.originalUrl === '/admin/profile' && (user.role === 'Owner' || user.role === 'Editor' || user.role === 'Viewer')) {
+            next();
+            
         }else {
             res.redirect('/dashboard');
         }
