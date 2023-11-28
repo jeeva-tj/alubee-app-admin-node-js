@@ -64,6 +64,9 @@ const userProtect = asyncHandler(async (req, res, next) => {
                 } else if (req.originalUrl === '/v2/api/dashboard/machine-no' && (role === 'Owner' || role === 'Editor' || role === 'Viewer')) {
                     next();
 
+                } else if (req.originalUrl === '/v2/api/admin/profile' && (role === 'Owner' || role === 'Editor' || role === 'Viewer')) {
+                    next();
+
                 } else {
                     res.status(401)
                     throw Error("you can't access this api!")
