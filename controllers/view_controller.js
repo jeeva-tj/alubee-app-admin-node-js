@@ -50,6 +50,10 @@ const userResetPage = (req, res) => {
     res.render('user_reset', { user: req?.session?.user?.role })
 }
 
+const adminProfilePage = (req, res) => {
+    res.render('profile', { user: req?.session?.user?.role })
+}
+
 export {
     loginPage,
     dashboardPage,
@@ -61,5 +65,6 @@ export {
     workOrderUpdatePage,
     userAddPage,
     userUpdatePage,
-    userResetPage
+    userResetPage,
+    adminProfilePage
 }
