@@ -50,3 +50,39 @@
         transform: rotate(360deg);
     }
 }
+
+
+#a_name_input{
+    display: none;
+}
+#a_email_input {
+    display: none;
+}
+#a_phone_input{
+    display: none;
+}
+
+#a_name_input.active{
+        display: block;
+    }
+#a_email_input.active{
+        display: block;
+    }
+#a_phone_input.active{
+    display: block;
+}
+
+
+#a_saveUpdate_btn{
+    display: none;
+}
+#a_saveUpdate_btn.active{
+    display: block;
+}
+#a_cancelUpdate_btn{
+    display: none;
+}
+#a_cancelUpdate_btn.active{
+    display: block;
+}
+
