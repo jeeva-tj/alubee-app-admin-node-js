@@ -264,6 +264,65 @@ const logout = asyncHandler(async (req, res) => {
 
 
 
+const adminProfileUpdate = asyncHandler(async (req, res) => {
+
+    const u_id = req?.user.User_ID;
+
+    if (!u_id) {
+        res.status(400)
+        throw new Error("User ID not found!")
+    }
+
+    const checkUser_query = `SELECT User_ID, Email, Name, Phone, Role FROM alubee_dataset.alubee_user_table WHERE User_ID=${u_id}`;
+    const user = await bigquery.query(checkUser_query);
+
+    let name = '';
+    let email = '';
+    let phone = '';
+    let role = '';
+
+
+    if (req.body.name) {
+        name = req.body.name
+    }else{
+        name = user[0][0].Name
+    }
+ 
+    
+    if (req.body.email) {
+        email = req.body.email
+    }else{
+        email = user[0][0].Email
+    }
+
+
+    if (req.body.phone) {
+        phone = req.body.phone
+    }else{
+        phone = user[0][0].Phone
+    }
+
+
+    if (req.body.role) {
+        role = req.body.role
+    }else{
+        role = user[0][0].Role
+    }
+
+
+    const update_query = `UPDATE alubee_dataset.alubee_user_table SET Name = "${name}", Email = "${email}", Role = "${role}", Phone = "${phone}" WHERE User_ID = ${u_id}`;
+
+    await bigquery.query(update_query);
+
+    res.status(200).json({
+        msg: 'Updated successful!',
+        success: true,
+    })
+
+})
+
+
+
 
 
 export {
@@ -275,5 +334,6 @@ export {
     updateUser,
     deleteUser,
     resetPwd,
+    adminProfileUpdate,
     logout
 }

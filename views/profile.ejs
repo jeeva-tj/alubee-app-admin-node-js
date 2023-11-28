@@ -456,23 +456,32 @@
                     <div class="flex items-center mb-3">
                         <div class="w-20 text-gray-500 font-medium">Name</div>
                         <div class="font-medium" id="a_user"></div>
+                        <input type="text" name="a_name_input" id="a_name_input" 
+                            class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  md:w-fit p-2 bg-white">
                     </div>
                     <div class="flex items-center mb-3">
                         <div class="w-20 text-gray-500 font-medium">Email</div>
                         <div class="font-medium" id="a_email"></div>
+                        <input type="email" name="a_email_input" id="a_email_input"
+                            class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  w-fit p-2 bg-white">
                     </div>
                     <div class="flex items-center mb-3">
                         <div class="w-20 text-gray-500 font-medium">Phone</div>
                         <div class="font-medium" id="a_phone"></div>
+                        <input type="tel" name="a_phone_input" id="a_phone_input"
+                            class="border border-gray-300 text-gray-900 text-sm focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  w-fit p-2 bg-white">
                     </div>
                     <div class="flex items-center mb-3">
                         <div class="w-20 text-gray-500 font-medium">Role</div>
                         <div class="font-medium" id="a_role"></div>
                     </div>
                 </div>
+                <h2 id="text_loader" class="font-medium text-blue-600"></h2>
                 <div class="flex items-center mt-5">
-                    <button type="button" class="py-2 px-4 rounded bg-green-600 text-white text-sm mr-4 ">Update Profile</button>
-                    <button type="button" class="py-2 px-4 rounded bg-[#284b63] text-white text-sm">Reset Password</button>
+                    <button type="button" class="py-2 px-3 rounded bg-green-600 text-white text-sm mr-3" id="a_update_btn">Update Profile</button>
+                    <button type="button" class="py-2 px-3 rounded bg-green-600 text-white text-sm mr-3" id="a_saveUpdate_btn">Save Update</button>
+                    <button type="button" class="py-2 px-3 rounded bg-red-500 text-white text-sm mr-3" id="a_cancelUpdate_btn">Cancel Update</button>
+                    <button type="button" class="py-2 px-3 rounded bg-[#284b63] text-white text-sm">Reset Password</button>
                 </div>
 
                 <div class="mt-10">
