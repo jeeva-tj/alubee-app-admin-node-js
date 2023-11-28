@@ -74,7 +74,14 @@ const profile = asyncHandler(async (req, res) => {
 
 const allUser = asyncHandler(async (req, res) => {
 
-    const query = "SELECT User_ID, Email, Name, Phone, Role FROM alubee_dataset.alubee_user_table";
+    const user = req.user;
+
+    if (!user.User_ID) {
+        res.status(400)
+        throw new Error("User not found!, try to login")
+    }
+
+    const query = `SELECT User_ID, Email, Name, Phone, Role FROM alubee_dataset.alubee_user_table WHERE User_ID != ${user.User_ID}`;
 
     const users = await bigquery.query(query);
 
