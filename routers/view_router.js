@@ -10,7 +10,8 @@ import {
     workOrderUpdatePage,
     userAddPage,
     userUpdatePage,
-    userResetPage
+    userResetPage,
+    adminProfilePage
 } from '../controllers/view_controller.js';
 const router = express.Router();
 import { authRoleProtect } from '../middlewares/AuthRole.js';
@@ -26,6 +27,7 @@ router.route('/work-order-update/:id').get(authRoleProtect, workOrderUpdatePage)
 router.route('/user-add').get(authRoleProtect, userAddPage);
 router.route('/user-update/:id').get(authRoleProtect, userUpdatePage);
 router.route('/user-reset/:id').get(authRoleProtect, userResetPage);
+router.route('/admin/profile').get(authRoleProtect, adminProfilePage);
 
 
 export default router;
