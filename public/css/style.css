@@ -305,7 +305,12 @@ select:-webkit-autofill:focus {
 }
 
 
+.screen_height {
+    height: auto;
+}
 
-.screen_height{
-    height: calc(100vh - 85px);
+@media(min-width:768px) {
+    .screen_height {
+        height: calc(100vh - 85px);
+    }
 }
