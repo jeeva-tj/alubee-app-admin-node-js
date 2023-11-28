@@ -102,7 +102,7 @@ select:-webkit-autofill:focus {
     background-repeat: no-repeat;
     background-repeat: no-repeat;
     z-index: 1;
-    padding: 0px 2rem;
+    padding: 0px 1rem;
 }
 
 .login_container::before {
