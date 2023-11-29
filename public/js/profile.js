@@ -14,6 +14,7 @@ const a_update_btn = document.getElementById('a_update_btn');
 const a_name_input = document.getElementById('a_name_input');
 const a_email_input = document.getElementById('a_email_input');
 const a_phone_input = document.getElementById('a_phone_input');
+const a_role_input = document.getElementById('a_role_input');
 
 const a_saveUpdate_btn = document.getElementById('a_saveUpdate_btn');
 const a_cancelUpdate_btn = document.getElementById('a_cancelUpdate_btn');
@@ -51,10 +52,6 @@ async function getProfile() {
             a_phone.innerHTML = data.Phone;
             a_role.innerHTML = data.Role;
 
-            a_name_input.value = data.Name;
-            a_email_input.value = data.Email;
-            a_phone_input.value = data.Phone;
-
         } else {
 
             loader.classList.remove('active');
@@ -88,19 +85,78 @@ async function getProfile() {
 getProfile();
 
 
-a_update_btn.addEventListener('click', () => {
+a_update_btn.addEventListener('click', async () => {
 
-    a_name_input.classList.add('active');
-    a_email_input.classList.add('active');
-    a_phone_input.classList.add('active');
+    try {
 
-    a_saveUpdate_btn.classList.add('active');
-    a_cancelUpdate_btn.classList.add('active');
+        const a_token = sessionStorage.getItem('alubee');
 
-    a_update_btn.style.display = "none";
-    a_user.style.display = "none";
-    a_email.style.display = "none";
-    a_phone.style.display = "none";
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${a_token}`
+            }
+        }
+
+        const { data } = await axios.get(`${hostUrl}/profile`, config)
+
+
+        if (data) {
+
+            a_name_input.value = data.Name;
+            a_email_input.value = data.Email;
+            a_phone_input.value = data.Phone;
+            a_role_input.value = data.Role
+
+            a_name_input.classList.add('active');
+            a_email_input.classList.add('active');
+            a_phone_input.classList.add('active');
+
+            if (data.Role === 'Owner') {
+                a_role.style.display = "none";
+                a_role_input.classList.add('active');
+            }else{
+                a_role.style.display = "block";
+                a_role_input.classList.remove('active');
+            }
+
+            a_saveUpdate_btn.classList.add('active');
+            a_cancelUpdate_btn.classList.add('active');
+
+            a_update_btn.style.display = "none";
+            a_user.style.display = "none";
+            a_email.style.display = "none";
+            a_phone.style.display = "none";
+            
+
+        } else {
+
+            loader.classList.remove('active');
+            notyf.error({
+                message: 'Something went wrong!',
+                duration: 5000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            })
+        }
+        
+    } catch (error) {
+        const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
+        notyf.error({
+            message: resErr,
+            duration: 5000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            dismissible: true
+        })
+    }
+
+   
 })
 
 a_saveUpdate_btn.addEventListener('click', async() => {
@@ -112,7 +168,8 @@ a_saveUpdate_btn.addEventListener('click', async() => {
         const a_data = {
             name: a_name_input.value,
             email: a_email_input.value,
-            phone: a_phone_input.value
+            phone: a_phone_input.value,
+            role: a_role_input.value
         }
 
 
@@ -133,6 +190,7 @@ a_saveUpdate_btn.addEventListener('click', async() => {
             a_name_input.classList.remove('active');
             a_email_input.classList.remove('active');
             a_phone_input.classList.remove('active');
+            a_role_input.classList.remove('active');
 
             a_saveUpdate_btn.classList.remove('active');
             a_cancelUpdate_btn.classList.remove('active');
@@ -141,6 +199,7 @@ a_saveUpdate_btn.addEventListener('click', async() => {
             a_user.style.display = "block";
             a_email.style.display = "block";
             a_phone.style.display = "block";
+            a_role.style.display = "block";
 
             getProfile();
 
@@ -180,6 +239,7 @@ a_cancelUpdate_btn.addEventListener('click', () => {
     a_name_input.classList.remove('active');
     a_email_input.classList.remove('active');
     a_phone_input.classList.remove('active');
+    a_role_input.classList.remove('active');
 
     a_saveUpdate_btn.classList.remove('active');
     a_cancelUpdate_btn.classList.remove('active');
@@ -188,4 +248,5 @@ a_cancelUpdate_btn.addEventListener('click', () => {
     a_user.style.display = "block";
     a_email.style.display = "block";
     a_phone.style.display = "block";
+    a_role.style.display = "block";
 })
