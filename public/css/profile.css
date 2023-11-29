@@ -61,6 +61,10 @@
 #a_phone_input{
     display: none;
 }
+#a_role_input{
+    display: none;
+}
+
 
 #a_name_input.active{
         display: block;
@@ -69,6 +73,9 @@
         display: block;
     }
 #a_phone_input.active{
+    display: block;
+}
+#a_role_input.active{
     display: block;
 }
 
