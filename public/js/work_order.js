@@ -39,7 +39,7 @@ wo_search.addEventListener('keyup', async(e) => {
             let workOrders = '';
             filter.forEach((val, index) => {
                 workOrders += `
-                    <tr class="bg-white border-b ">
+                    <tr class="bg-white border-b whitespace-nowrap">
                         <td class="px-4 py-4 font-medium text-black">${index + 1}</td>
                         <td class="px-4 py-4">${val.PlanID}</td>
                         <td class="px-4 py-4">${val.Shift}</td>
@@ -49,7 +49,7 @@ wo_search.addEventListener('keyup', async(e) => {
                         <td class="px-4 py-4">${val.Rejection_Plan}</td>
                         <td class="px-4 py-4">${val.Operator}</td>
                         <td class="px-4 py-4">${val.Date.value}</td>
-                        <td class="px-3 py-3 flex items-center">
+                        <td class="px-3 py-3 flex items-center ">
                             <a href='/work-order-update/${val.PlanID}'
                                 class="font-medium text-green-600 hover:underline" id="edit_work_order">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
@@ -153,17 +153,17 @@ async function getAllWorkOrders() {
             let workOrders = '';
             data.forEach((val, index) => {
                 workOrders += `
-                    <tr class="bg-white border-b ">
+                    <tr class="bg-white border-b whitespace-nowrap">
                         <td class="px-4 py-4 font-medium text-black">${index + 1}</td>
-                        <td class="px-4 py-4">${val.PlanID}</td>
-                        <td class="px-4 py-4">${val.Shift}</td>
-                        <td class="px-4 py-4 font-medium text-black">${val.Machine_No}</td>
-                        <td class="px-4 py-4">${val.Part_No}</td>
-                        <td class="px-4 py-4">${val.Shot_Plan}</td>
-                        <td class="px-4 py-4">${val.Rejection_Plan}</td>
-                        <td class="px-4 py-4">${val.Operator}</td>
-                        <td class="px-4 py-4">${val.Date.value}</td>
-                        <td class="px-3 py-3 flex items-center">
+                        <td class="px-4 py-4 ">${val.PlanID}</td>
+                        <td class="px-4 py-4 ">${val.Shift}</td>
+                        <td class="px-4 py-4 font-medium text-black ">${val.Machine_No}</td>
+                        <td class="px-4 py-4 ">${val.Part_No}</td>
+                        <td class="px-4 py-4 ">${val.Shot_Plan}</td>
+                        <td class="px-4 py-4 ">${val.Rejection_Plan}</td>
+                        <td class="px-4 py-4 ">${val.Operator}</td>
+                        <td class="px-4 py-4 ">${val.Date.value}</td>
+                        <td class="px-3 py-3 flex items-center  ">
                             <a href='/work-order-update/${val.PlanID}'
                                 class="font-medium text-green-600 hover:underline" id="edit_work_order">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"

@@ -37,7 +37,7 @@ user_search.addEventListener('keyup', async (e) => {
             let users = '';
             filter?.forEach((val) => {
                 users += `
-                    <tr class="bg-white border-b ">
+                    <tr class="bg-white border-b whitespace-nowrap">
                         <td class="px-4 py-4">${val.User_ID}</td>
                         <td class="px-4 py-4 text-black font-medium uppercase text-[12px]">${val.Name}</td>
                         <td class="px-4 py-4">
@@ -167,7 +167,7 @@ async function getAllUsers() {
             let users = '';
             data?.forEach((val) => {
                 users += `
-                    <tr class="bg-white border-b ">
+                    <tr class="bg-white border-b whitespace-nowrap">
                         <td class="px-4 py-4">${val.User_ID}</td>
                         <td class="px-4 py-4 text-black font-medium uppercase text-[12px]">${val.Name}</td>
                         <td class="px-4 py-4">

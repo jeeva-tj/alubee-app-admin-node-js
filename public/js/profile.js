@@ -110,6 +110,8 @@ a_update_btn.addEventListener('click', async () => {
 
     try {
 
+        text_loader.innerHTML = "Loading...!";
+
         const a_token = sessionStorage.getItem('alubee');
 
         const config = {
@@ -123,6 +125,7 @@ a_update_btn.addEventListener('click', async () => {
 
 
         if (data) {
+            text_loader.innerHTML = "";
 
             a_name_input.value = data.Name;
             a_email_input.value = data.Email;
@@ -154,7 +157,7 @@ a_update_btn.addEventListener('click', async () => {
 
         } else {
 
-            loader.classList.remove('active');
+            text_loader.innerHTML = "";
             notyf.error({
                 message: 'Something went wrong!',
                 duration: 5000,
@@ -167,6 +170,8 @@ a_update_btn.addEventListener('click', async () => {
         }
         
     } catch (error) {
+
+        text_loader.innerHTML = "";
         const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
         notyf.error({
             message: resErr,
