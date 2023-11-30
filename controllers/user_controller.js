@@ -276,6 +276,11 @@ const adminProfileUpdate = asyncHandler(async (req, res) => {
     const checkUser_query = `SELECT User_ID, Email, Name, Phone, Role FROM alubee_dataset.alubee_user_table WHERE User_ID=${u_id}`;
     const user = await bigquery.query(checkUser_query);
 
+    if (!user[0][0]?.User_ID) {
+        res.status(400)
+        throw new Error("User not found!")
+    }
+
     let name = '';
     let email = '';
     let phone = '';
@@ -323,6 +328,55 @@ const adminProfileUpdate = asyncHandler(async (req, res) => {
 
 
 
+const adminPwdReset = asyncHandler(async (req, res) => {
+
+    const { password } = req.body;
+
+
+    if (!password) {
+        res.status(400)
+        throw new Error('Password is required!')
+    }
+
+    const u_id = req?.user.User_ID;
+
+    if (!u_id) {
+        res.status(400)
+        throw new Error("User ID not found!")
+    }
+
+    const checkUser_query = `SELECT User_ID FROM alubee_dataset.alubee_user_table WHERE User_ID=${u_id}`;
+    const user = await bigquery.query(checkUser_query);
+
+    if (!user[0][0]?.User_ID) {
+        res.status(400)
+        throw new Error("User not found!")
+    }
+
+
+    const salt = await bcrypt.genSalt(10);
+    if (!salt) {
+        res.status(400)
+        throw new Error('somthing went wrong with bcrypt')
+    }
+
+    const hashPassword = await bcrypt.hash(password, salt)
+    if (!hashPassword) {
+        res.status(400)
+        throw new Error('something went wrong with hashing')
+    }
+
+    const update_query = `UPDATE alubee_dataset.alubee_user_table SET Pssword = "${hashPassword}" WHERE User_ID = ${u_id}`;
+    await bigquery.query(update_query);
+
+    res.status(200).json({
+        msg: 'Password Reseted!',
+        success: true,
+    })
+})
+
+
+
 
 
 export {
@@ -335,5 +389,6 @@ export {
     deleteUser,
     resetPwd,
     adminProfileUpdate,
+    adminPwdReset,
     logout
 }
