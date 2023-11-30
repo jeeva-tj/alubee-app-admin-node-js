@@ -86,6 +86,8 @@
 #a_saveUpdate_btn.active{
     display: block;
 }
+
+
 #a_cancelUpdate_btn{
     display: none;
 }
@@ -93,3 +95,37 @@
     display: block;
 }
 
+
+
+#save_resetpassword_btn{
+    display: none;
+}
+
+#save_resetpassword_btn.active{
+    display: block;
+}
+
+#cancel_resetpassword_btn{
+    display: none;
+}
+
+#cancel_resetpassword_btn.active{
+    display: block;
+}
+
+
+#profile_container{
+    display: block;
+}
+
+#profile_container.active{
+    display: none;
+}
+
+#password_container{
+    display: none;
+}
+
+#password_container.active{
+    display: block;
+}
