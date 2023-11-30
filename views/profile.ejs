@@ -452,47 +452,74 @@
             </section>
 
             <div class="bg-white p-3 rounded-lg" id="admin_profile">
-                <div class="">
+                <div id="profile_container">
                     <div class="flex items-center mb-3">
                         <div class="w-20 text-gray-500 font-medium">Name</div>
                         <div class="font-medium" id="a_user"></div>
                         <input type="text" name="a_name_input" id="a_name_input" 
-                            class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  md:w-fit p-2 bg-white">
+                            class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  md:w-fit p-2 bg-white" required>
                     </div>
                     <div class="flex items-center mb-3">
                         <div class="w-20 text-gray-500 font-medium">Email</div>
                         <div class="font-medium" id="a_email"></div>
                         <input type="email" name="a_email_input" id="a_email_input"
-                            class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  w-fit p-2 bg-white">
+                            class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  w-fit p-2 bg-white" required>
                     </div>
                     <div class="flex items-center mb-3">
                         <div class="w-20 text-gray-500 font-medium">Phone</div>
                         <div class="font-medium" id="a_phone"></div>
                         <input type="tel" name="a_phone_input" id="a_phone_input"
-                            class="border border-gray-300 text-gray-900 text-sm focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  w-fit p-2 bg-white">
+                            class="border border-gray-300 text-gray-900 text-sm focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  w-fit p-2 bg-white" required>
                     </div>
                     <div class="flex items-center mb-3">
                         <div class="w-20 text-gray-500 font-medium">Role</div>
                         <div class="font-medium" id="a_role"></div>
-                        <select name="a_role" id="a_role_input" class="border border-gray-300 text-gray-900 text-sm focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  w-fit p-2 bg-white">
+                        <select name="a_role" id="a_role_input" class="border border-gray-300 text-gray-900 text-sm focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  w-fit p-2 bg-white" required>
                             <option value="Owner">Owner</option>
                             <option value="Editor">Editor</option>
                             <option value="Viewer">Viewer</option>
                         </select>
                     </div>
                 </div>
+                <div id="password_container">
+                    <div class="flex items-center mb-3">
+                        <div class="w-20 text-gray-500 font-medium w-40">Password</div>
+                        <div class="">
+                            <input type="password" name="a_password_input" id="a_password_input"
+                                class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  md:w-fit p-2 bg-white"
+                                required>
+                            <div id="a_password_err" class="text-xs mt-0.5"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <div class="w-20 text-gray-500 font-medium w-40">Confirm Password</div>
+                        <div class="">
+                            <input type="password" name="a_cpassword_input" id="a_cpassword_input"
+                                class="border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500  md:w-fit p-2 bg-white"
+                                required>
+                            <div id="a_cpassword_err" class="text-xs mt-0.5"></div>
+                        </div>
+                    </div>
+                </div>
                 <h2 id="text_loader" class="font-medium text-blue-600"></h2>
                 <div class="flex items-center mt-5">
-                    <button type="button" class="py-2 px-3 rounded bg-green-600 text-white text-sm mr-3" id="a_update_btn">Update Profile</button>
-                    <button type="button" class="py-2 px-3 rounded bg-green-600 text-white text-sm mr-3" id="a_saveUpdate_btn">Save Update</button>
-                    <button type="button" class="py-2 px-3 rounded bg-red-500 text-white text-sm mr-3" id="a_cancelUpdate_btn">Cancel Update</button>
-                    <button type="button" class="py-2 px-3 rounded bg-[#284b63] text-white text-sm">Reset Password</button>
+                    <div id="a_profileUpdate_btns" class="flex items-center ">
+                        <button type="button" class="py-2 px-3 rounded bg-green-600 text-white text-sm mr-3" id="a_update_btn">Update Profile</button>
+                        <button type="button" class="py-2 px-3 rounded bg-green-600 text-white text-sm mr-3" id="a_saveUpdate_btn">Save Update</button>
+                        <button type="button" class="py-2 px-3 rounded bg-black text-white text-sm" id="a_cancelUpdate_btn">Cancel Update</button>
+                    </div>
+
+                    <div id="a_resetPassword_btns" class="flex items-center ">
+                        <button type="button" class="py-2 px-3 rounded bg-[#284b63] text-white text-sm" id="reset_password_btn">Reset Password</button>
+                        <button type="button" class="py-2 px-3 rounded bg-green-600 text-white text-sm mr-3" id="save_resetpassword_btn">Save Password</button>
+                        <button type="button" class="py-2 px-3 rounded bg-black text-white text-sm" id="cancel_resetpassword_btn">Cancel</button>
+                    </div>
                 </div>
 
                 <div class="mt-10">
                     <div class="mb-5 text-[15px]">
                         When you delete your account, your personal data will be permanently deleted. Your profile and boards will be
-                        removed from alubee dashboard and it won’t be possible to recover them.
+                        removed from alubee dashboard and it won't be possible to recover them.
                     </div>
                     <button type="button" class="py-2 px-4 rounded bg-red-500 text-white text-sm">Delete Account</button>
                 </div>
