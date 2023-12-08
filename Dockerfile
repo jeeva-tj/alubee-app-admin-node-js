@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,11 +37,25 @@ RUN npm install --only=production
 # Set the environmental variable for JWT token
 ENV JWT_SECRET="12345"
 ENV NODE_ENV="production"
+=======
+FROM node:18-alpine
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
+
+>>>>>>> ae5a8aabe5112139f21671aeddb5d35771e5e2e7
 # Copy local code to the container image.
 COPY . ./
 
 # Run the web service on container startup.
+<<<<<<< HEAD
 CMD [ "node", "index.js" ]
 
 # [END run_helloworld_dockerfile]
 # [END cloudrun_helloworld_dockerfile]
+=======
+CMD [ "node", "server.js" ]
+>>>>>>> ae5a8aabe5112139f21671aeddb5d35771e5e2e7
