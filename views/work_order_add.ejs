@@ -37,15 +37,29 @@
             </div>
             <div class="">
                 <div class="flex items-center">
-                    <div class="bg-[#F2F3F3] md:bg-[#ddeee5] hover:bg-[#ddeee5] md:hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" class="tabler-icon tabler-icon-bell">
-                            <path
-                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
-                            </path>
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-                        </svg>
+                    <div class="notification_container">
+                        <button
+                            class="bg-[#F2F3F3] md:bg-[#ddeee5] hover:bg-[#ddeee5] md:hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3"
+                            id="notification_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                class="tabler-icon tabler-icon-bell">
+                                <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
+                                </path>
+                                <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                            </svg>
+                        </button>
+                        <div id="notification_box">
+                            <div class="px-3 pt-3 font-bold text-lg">Notifications</div>
+                            <div class="px-3 text-[13px] pb-4 text-gray-400">you have <span class="text-blue-300"
+                                    id="notification_count"></span> Today</div>
+                            <div id="notification_details"></div>
+                            <section id="notification_loader">
+                                <span class="notification_loader"></span>
+                            </section>
+                            <a href="/notification" class="block bg-blue-500 text-white text-center p-2 rounded-br rounded-bl text-sm">See
+                                all notifications</a>
+                        </div>
                     </div>
                     <div class="md:block hidden bg-[#F2F3F3] hover:bg-[#ddeee5] p-1.5 rounded cursor-pointer md:mx-3 fullscreen"
                         id="fullscreen_btn">
@@ -449,7 +463,7 @@
 
                 <div class="mt-8" id="work_order_add_div">
                     <form id="work_order_add_form">
-                        <div class="grid lg:grid-cols-3 gap-6">
+                        <div class="grid lg:grid-cols-4 gap-6">
                             <div class="">
                                 <label for="plan_id" class="block mb-2 text-sm font-medium text-gray-900">Plan Id <span
                                         class="text-red-500">*</span></label>
@@ -463,6 +477,23 @@
                                 <input type="date" id="date"
                                     class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
                                     name="date" required>
+                            </div>
+                            <div class="">
+                                <label for="part_no" class="block mb-2 text-sm font-medium text-gray-900">Part No. <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="part_no"
+                                    class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
+                                    name="part_no" required>
+                            </div>
+                            <div class="">
+                                <label for="unit" class="block mb-2 text-sm font-medium text-gray-900">Unit <span
+                                        class="text-red-500">*</span></label>
+                                <select id="unit"
+                                    class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
+                                    name="unit" required>
+                                    <option value="Unit I">Unit I</option>
+                                    <option value="Unit II">Unit II</option>
+                                </select>
                             </div>
                             <div class="">
                                 <label for="shift" class="block mb-2 text-sm font-medium text-gray-900">Shift <span
@@ -481,20 +512,16 @@
                                     class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
                                     name="machine_no" required>
                                 </select>
+                                <p id="machine_loader" class="text-sm"></p>
                             </div>
-                            <div class="">
-                                <label for="part_no" class="block mb-2 text-sm font-medium text-gray-900">Part No. <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="part_no"
-                                    class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
-                                    name="part_no" required>
-                            </div>
+                            
                             <div class="">
                                 <label for="shot_plan" class="block mb-2 text-sm font-medium text-gray-900">Shot Plan <span
                                         class="text-red-500">*</span></label>
                                 <input type="number" id="shot_plan"
                                     class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
                                     name="shot_plan" required>
+                                    <p id="shotPlan_check_err" class="text-sm text-red-500"></p>
                             </div>
                             <div class="">
                                 <label for="rejection_plan" class="block mb-2 text-sm font-medium text-gray-900">Rejection Plan
@@ -502,6 +529,7 @@
                                 <input type="number" id="rejection_plan"
                                     class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
                                     name="rejection_plan" required>
+                                <p id="rejectionPlan_check_err" class="text-sm text-red-500"></p>
                             </div>
                             <div class="">
                                 <label for="operator" class="block mb-2 text-sm font-medium text-gray-900">Operator<span
@@ -510,6 +538,18 @@
                                     class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
                                     name="operator" required>
                                 </select>
+                            </div>
+                            <div class="">
+                                <label for="operator" class="block mb-2 text-sm font-medium text-gray-900">Pressure <span
+                                        class="text-red-500">*</span></label>
+                                <input 
+                                    type="number"
+                                    class=" border border-gray-300 text-gray-900 text-sm  focus:outline-none rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5 bg-white"
+                                    id="pressure"
+                                    name="pressure"
+                                    required
+                                >
+                                <p id="pressure_check_err" class="text-sm text-red-500"></p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -546,8 +586,9 @@
 
 
     <script src="/js/authCheck.js"></script>
-    <script src="/js/work_order_add.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/notification.js"></script>
+    <script src="/js/work_order_add.js"></script>
 
 </body>
 

@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
 import bigquery from '../config/big_query.js';
 import generateToken from '../utils/generateToken.js';
+import timeFormat from '../helper/time.js';
 
 
 const login = asyncHandler(async (req, res) => {
@@ -46,6 +47,9 @@ const login = asyncHandler(async (req, res) => {
 
     req.session.user = resData;
 
+    // const tracker_query = `INSERT INTO alubee_dataset.alubee_nofitication_table VALUES ('${timeFormat()}', ${resData.id} , '-', 'Login')`;
+    // await bigquery.query(tracker_query);
+
     res.status(200).json({
         msg: 'Login successful!',
         success: true,
@@ -87,6 +91,8 @@ const allUser = asyncHandler(async (req, res) => {
 
     res.status(200).send(users[0]);
 })
+
+
 
 const userById = asyncHandler(async (req, res) => {
 
@@ -148,8 +154,10 @@ const newUser = asyncHandler(async (req, res) => {
     }
 
     const insert_query = `INSERT INTO alubee_dataset.alubee_user_table VALUES(${user_id[0][0].user_id + 1}, '${email}', '${hashPassword}', '${name}', '${phone}', '${role}')`;
-
     await bigquery.query(insert_query);
+
+    const tracker_query = `INSERT INTO alubee_dataset.alubee_nofitication_table VALUES ('${timeFormat()}', ${req.user.User_ID} , 'Create', 'User Management')`;
+    await bigquery.query(tracker_query);
 
     res.status(200).json({
         msg: 'User Created successful!',
@@ -174,7 +182,6 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 
     const query = `SELECT User_ID FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`;
-
     const existUser =  await bigquery.query(query);
 
     if (!existUser[0][0]?.User_ID) {
@@ -183,8 +190,10 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 
     const update_query = `UPDATE alubee_dataset.alubee_user_table SET Name = "${name}", Email = "${email}", Role = "${role}", Phone = "${phone}" WHERE User_ID = ${ req?.params?.id }`
-
     await bigquery.query(update_query);
+
+    const tracker_query = `INSERT INTO alubee_dataset.alubee_nofitication_table VALUES ('${timeFormat()}', ${req.user.User_ID} , 'Update', 'User Management')`;
+    await bigquery.query(tracker_query);
 
     res.status(200).json({
         msg: 'User Updated successful!',
@@ -203,7 +212,6 @@ const deleteUser = asyncHandler(async (req, res) => {
     }
 
     const query = `SELECT User_ID FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`;
-
     const existUser = await bigquery.query(query);
 
     if (!existUser[0][0]?.User_ID) {
@@ -212,8 +220,10 @@ const deleteUser = asyncHandler(async (req, res) => {
     }
 
     const delete_query = `DELETE FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`
-
     await bigquery.query(delete_query);
+
+    const tracker_query = `INSERT INTO alubee_dataset.alubee_nofitication_table VALUES ('${timeFormat()}', ${req.user.User_ID} , 'Delete', 'User Management')`;
+    await bigquery.query(tracker_query);
 
     res.status(200).json({
         msg: 'User Deleted successful!',
@@ -246,8 +256,10 @@ const resetPwd = asyncHandler(async (req, res) => {
     }
 
     const reset_query = `UPDATE alubee_dataset.alubee_user_table SET Pssword = "${hashPassword}" WHERE Email = "${email}"`
-
     await bigquery.query(reset_query);
+
+    const tracker_query = `INSERT INTO alubee_dataset.alubee_nofitication_table VALUES ('${timeFormat()}', ${req.user.User_ID} , 'Reset Password', 'User Management')`;
+    await bigquery.query(tracker_query);
 
     res.status(200).json({
         msg: 'Password Reseted!',
@@ -332,7 +344,6 @@ const adminPwdReset = asyncHandler(async (req, res) => {
 
     const { password } = req.body;
 
-
     if (!password) {
         res.status(400)
         throw new Error('Password is required!')
@@ -377,6 +388,35 @@ const adminPwdReset = asyncHandler(async (req, res) => {
 
 
 
+const adminProfileDelete = asyncHandler(async (req, res) => {
+
+    if (!req?.params?.id) {
+        res.status(400)
+        throw new Error("User ID not found!")
+    }
+
+    const query = `SELECT User_ID FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`;
+    const existUser = await bigquery.query(query);
+
+    if (!existUser[0][0]?.User_ID) {
+        res.status(400)
+        throw new Error("User not found!")
+    }
+
+    const delete_query = `DELETE FROM alubee_dataset.alubee_user_table WHERE User_ID=${req?.params?.id}`
+    await bigquery.query(delete_query);
+
+    const tracker_query = `INSERT INTO alubee_dataset.alubee_nofitication_table VALUES ('${timeFormat()}', ${req.user.User_ID} , 'Delete', 'User Management')`;
+    await bigquery.query(tracker_query);
+
+    res.status(200).json({
+        msg: 'User Deleted successful!',
+        success: true,
+    })
+})
+
+
+
 
 
 export {
@@ -390,5 +430,6 @@ export {
     resetPwd,
     adminProfileUpdate,
     adminPwdReset,
+    adminProfileDelete,
     logout
 }

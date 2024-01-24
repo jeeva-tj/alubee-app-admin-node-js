@@ -3,18 +3,20 @@ const user_management_tbody = document.getElementById('user_management_tbody');
 const user_management_table = document.getElementById('user_management_table');
 const user_search = document.getElementById('user_search');
 const user_refresh_btn = document.getElementById('user_refresh_btn');
+const userEmptyMsg = document.getElementById('user_empty_msg');
 
 const notyf = new Notyf();
 
 user_refresh_btn.addEventListener('click', () => {
     getAllUsers();
+    getNotification();
 })
 
 user_search.addEventListener('keyup', async (e) => {
     e.preventDefault();
 
     try {
-        
+        userEmptyMsg.innerHTML = '';
         const a_token = sessionStorage.getItem('alubee');
 
         const config = {
@@ -32,7 +34,9 @@ user_search.addEventListener('keyup', async (e) => {
         })
 
 
-        if (filter) {
+        if (filter.length > 0) {
+
+            user_management_table.classList.remove('active');
 
             let users = '';
             filter?.forEach((val) => {
@@ -112,16 +116,8 @@ user_search.addEventListener('keyup', async (e) => {
             user_management_tbody.innerHTML = users;
 
         } else {
-
-            notyf.error({
-                message: 'Something went wrong! getting data',
-                duration: 5000,
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-                dismissible: true
-            })
+            user_management_table.classList.add('active');
+            userEmptyMsg.innerHTML = 'No Users Match Your Search';
         }
 
     } catch (error) {
@@ -159,10 +155,11 @@ async function getAllUsers() {
         const { data } = await axios.get(`${hostUrl}/user`, config)
 
 
-        if (data) {
+        if (data.length > 0) {
 
             user_management_table.classList.remove('active');
             loader.classList.remove('active');
+            userEmptyMsg.innerHTML = "";
 
             let users = '';
             data?.forEach((val) => {
@@ -244,16 +241,7 @@ async function getAllUsers() {
         }else{
 
             loader.classList.remove('active');
-
-            notyf.error({
-                message: 'Something went wrong! getting data',
-                duration: 5000,
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-                dismissible: true
-            })
+            userEmptyMsg.innerHTML = 'No Records Found';
         }
 
     } catch (error) {
@@ -283,26 +271,50 @@ async function userDelete(id) {
 
     try {
 
-        if (id) {
+        var result = confirm("Are you sure, you want to delete?");
 
-            const a_token = sessionStorage.getItem('alubee');
+        if (result == true) {
 
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${a_token}`
+            if (id) {
+
+                user_management_table.classList.add('active');
+                loader.classList.add('active');
+
+                const a_token = sessionStorage.getItem('alubee');
+
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${a_token}`
+                    }
                 }
-            }
 
-            const { data } = await axios.delete(`${hostUrl}/user/${id}`, config);
+                const { data } = await axios.delete(`${hostUrl}/user/${id}`, config);
 
-            if (data?.success) {
-                getAllUsers();
+                if (data?.success) {
+                    user_management_table.classList.remove('active');
+                    loader.classList.remove('active');
+                    getAllUsers();
+                    getNotification();
+
+                } else {
+
+                    loader.classList.remove('active');
+                    notyf.error({
+                        message: 'Something went wrong to delete!',
+                        duration: 5000,
+                        position: {
+                            x: 'right',
+                            y: 'top',
+                        },
+                        dismissible: true
+                    })
+                }
 
             } else {
-
+                loader.classList.remove('active');
                 notyf.error({
-                    message: 'Something went wrong to delete!',
+                    message: 'ID is required to delete!',
                     duration: 5000,
                     position: {
                         x: 'right',
@@ -313,19 +325,13 @@ async function userDelete(id) {
             }
 
         } else {
-
-            notyf.error({
-                message: 'ID is required to delete!',
-                duration: 5000,
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-                dismissible: true
-            })
+            return false;
         }
+
+        
         
     } catch (error) {
+        loader.classList.remove('active');
         const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
         
         notyf.error({

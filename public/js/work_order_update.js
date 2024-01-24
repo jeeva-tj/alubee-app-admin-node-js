@@ -138,7 +138,8 @@ work_order_update_form.addEventListener('submit', async (e) => {
 
             loader.classList.remove('active');
             location.href = origin + '/work-order';
-
+            getNotification();
+            
         } else {
 
             loader.classList.remove('active');

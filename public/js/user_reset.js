@@ -130,6 +130,7 @@ user_reset_form.addEventListener('submit', async (e) => {
 
             loader.classList.remove('active');
             location.href = origin + '/user-management';
+            getNotification();
 
         } else {
 

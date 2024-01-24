@@ -54,6 +54,11 @@ const adminProfilePage = (req, res) => {
     res.render('profile', { user: req?.session?.user?.role })
 }
 
+
+const notificationPage = (req, res) => {
+    res.render('notification', { user: req?.session?.user?.role })
+}
+
 export {
     loginPage,
     dashboardPage,
@@ -66,5 +71,6 @@ export {
     userAddPage,
     userUpdatePage,
     userResetPage,
-    adminProfilePage
+    adminProfilePage,
+    notificationPage
 }

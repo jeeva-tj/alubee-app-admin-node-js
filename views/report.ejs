@@ -37,15 +37,29 @@
             </div>
             <div class="">
                 <div class="flex items-center">
-                    <div class="bg-[#F2F3F3] md:bg-[#ddeee5] hover:bg-[#ddeee5] md:hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" class="tabler-icon tabler-icon-bell">
-                            <path
-                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
-                            </path>
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-                        </svg>
+                    <div class="notification_container">
+                        <button
+                            class="bg-[#F2F3F3] md:bg-[#ddeee5] hover:bg-[#ddeee5] md:hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3"
+                            id="notification_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                class="tabler-icon tabler-icon-bell">
+                                <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
+                                </path>
+                                <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                            </svg>
+                        </button>
+                        <div id="notification_box">
+                            <div class="px-3 pt-3 font-bold text-lg">Notifications</div>
+                            <div class="px-3 text-[13px] pb-4 text-gray-400">you have <span class="text-blue-300"
+                                    id="notification_count"></span> Today</div>
+                            <div id="notification_details"></div>
+                            <section id="notification_loader">
+                                <span class="notification_loader"></span>
+                            </section>
+                            <a href="/notification" class="block bg-blue-500 text-white text-center p-2 rounded-br rounded-bl text-sm">See
+                                all notifications</a>
+                        </div>
                     </div>
                     <div class="md:block hidden bg-[#F2F3F3] hover:bg-[#ddeee5] p-1.5 rounded cursor-pointer md:mx-3 fullscreen"
                         id="fullscreen_btn">
@@ -523,7 +537,9 @@
                                 </div>
                             </div>
                             <div class="border border-gray-300">
-                                <div class="mb-2 p-0.5 border-b border-gray-300 text-[15px]"><b>Unit:</b> 1</div>
+                                <div class="mb-2 p-0.5 border-b border-gray-300 text-[15px]"><b>Unit:</b>
+                                    <span id="r_unit"></span>
+                                </div>
                                 <div class="mb-2 p-0.5 border-b border-gray-300 text-[15px]">
                                     <b>Date:</b>
                                     <span id="r_date"></span>
@@ -661,32 +677,111 @@
                         </div>
                 
                         <div id="r_hourly_bins"></div>
-                
-                
+
+                        <div class="border border-gray-300 h-7 "></div>
+
+                        <!-- machine idle breakup -->
+                        <div class="grid grid-cols-9 font-bold text-[15px]">
+                            <div class="border border-gray-300 p-0.5 text-center">9</div>
+                            <div class="col-span-8 border border-gray-300 p-0.5 font-bold text-center">Machine Idle Breakup</div>
+                        </div>
+
+                        <div class="grid grid-cols-9 font-bold text-[15px]">
+                            <div class="border border-gray-300 p-0.5 text-center">S.No</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-bold text-center">Description</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-bold text-center">Idle Hours</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-bold text-center">Breakup Time</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-bold text-center">Remarks</div>
+                        </div>
+
+                        <div class="grid grid-cols-9 text-[15px]">
+                            <div class="border border-gray-300 p-0.5 font-medium text-center">1</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-medium text-center">Break</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center"></div>
+                        </div>
+                        <div class="grid grid-cols-9 text-[15px]">
+                            <div class="border border-gray-300 p-0.5 font-medium text-center">2</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-medium text-center">Setting</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center"></div>
+                        </div>
+                        <div class="grid grid-cols-9 text-[15px]">
+                            <div class="border border-gray-300 p-0.5 font-medium text-center">3</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-medium text-center">Machine</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center"></div>
+                        </div>
+                        <div class="grid grid-cols-9 text-[15px]">
+                            <div class="border border-gray-300 p-0.5 font-medium text-center">4</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-medium text-center">Rejection</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center"></div>
+                        </div>
+                        <div class="grid grid-cols-9 text-[15px]">
+                            <div class="border border-gray-300 p-0.5 font-medium text-center">5</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  font-medium text-center">Man Power</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center"></div>
+                        </div>
+                        <div class="grid grid-cols-9 text-[15px]">
+                            <div class="border border-gray-300 p-0.5 font-medium text-center">6</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-medium text-center">No Load</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center"></div>
+                        </div>
+                        <div class="grid grid-cols-9 text-[15px]">
+                            <div class="border border-gray-300 p-0.5 font-medium text-center">7</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-medium text-center">Power Cut</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center"></div>
+                        </div>
+                        <div class="grid grid-cols-9 text-[15px]">
+                            <div class="border border-gray-300 p-0.5 font-medium text-center">8</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-medium text-center">Mould</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5  text-center"></div>
+                        </div>
+                        <div class="grid grid-cols-9  text-[15px]">
+                            <div class="border border-gray-300 p-0.5 text-center"></div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 font-bold text-center">Total</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center">-</div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center"></div>
+                            <div class="col-span-2 border border-gray-300 p-0.5 text-center"></div>
+                        </div>
+
                         <div class="border border-gray-300 h-7 "></div>
                 
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">9</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">10</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">Shift Average</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]" id="r_shift_avg"></div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">10</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">11</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">OEE</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]">-</div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">11</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">12</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">Minimum Cycle Time</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]">-</div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">12</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">13</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">Average Cycle Time</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]">-</div>
                         </div>
                         <div class="grid grid-cols-9">
-                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">13</div>
+                            <div class="border border-gray-300 p-0.5 text-center font-bold text-[15px]">14</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 font-bold text-[15px]">Revenue Missed</div>
                             <div class="col-span-4 border border-gray-300 p-0.5 text-[15px]">-</div>
                         </div>
@@ -716,6 +811,7 @@
     <script src="/js/authCheck.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/report.js"></script>
+    <script src="/js/notification.js"></script>
     <script src="/lib/jquery.min.js"></script>
     <script src="/lib/jspdf.debug.js"></script>
     <script src="/lib/html2pdf.js"></script>

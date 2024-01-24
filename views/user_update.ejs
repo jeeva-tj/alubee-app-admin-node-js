@@ -40,15 +40,29 @@
             </div>
             <div class="">
                 <div class="flex items-center">
-                    <div class="bg-[#F2F3F3] md:bg-[#ddeee5] hover:bg-[#ddeee5] md:hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" class="tabler-icon tabler-icon-bell">
-                            <path
-                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
-                            </path>
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-                        </svg>
+                    <div class="notification_container">
+                        <button
+                            class="bg-[#F2F3F3] md:bg-[#ddeee5] hover:bg-[#ddeee5] md:hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3"
+                            id="notification_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                class="tabler-icon tabler-icon-bell">
+                                <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
+                                </path>
+                                <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                            </svg>
+                        </button>
+                        <div id="notification_box">
+                            <div class="px-3 pt-3 font-bold text-lg">Notifications</div>
+                            <div class="px-3 text-[13px] pb-4 text-gray-400">you have <span class="text-blue-300"
+                                    id="notification_count"></span> Today</div>
+                            <div id="notification_details"></div>
+                            <section id="notification_loader">
+                                <span class="notification_loader"></span>
+                            </section>
+                            <a href="/notification" class="block bg-blue-500 text-white text-center p-2 rounded-br rounded-bl text-sm">See
+                                all notifications</a>
+                        </div>
                     </div>
                     <div class="md:block hidden bg-[#F2F3F3] hover:bg-[#ddeee5] p-1.5 rounded cursor-pointer md:mx-3 fullscreen"
                         id="fullscreen_btn">
@@ -519,8 +533,9 @@
 
 
     <script src="/js/authCheck.js"></script>
-    <script src="/js/user_update.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/notification.js"></script>
+    <script src="/js/user_update.js"></script>
 
 </body>
 

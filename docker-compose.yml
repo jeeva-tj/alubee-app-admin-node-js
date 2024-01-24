@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  server-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: alubee-app
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+      - JWT_SECRET=jwtSecret123
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - alubee-network
+networks:
+  alubee-network:
+    driver: bridge

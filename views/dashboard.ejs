@@ -8,9 +8,13 @@
     <title>Dashboard</title>
     <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/lib/notyf.css">
+    <script src="/lib/axios.js"></script>
     <script src="/lib/tailwindcss.js"></script>
     <script src="/lib/apexcharts.js"></script>
     <script src="https://code.jscharting.com/latest/jscharting.js"></script>
+    <script src="/lib/notyf.js"></script>
+
 </head>
 <body>
 
@@ -37,15 +41,24 @@
             </div>
             <div class="">
                 <div class="flex items-center">
-                    <div class="bg-[#F2F3F3] md:bg-[#ddeee5] hover:bg-[#ddeee5] md:hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" class="tabler-icon tabler-icon-bell">
-                            <path
-                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
-                            </path>
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-                        </svg>
+                    <div class="notification_container">
+                        <button class="bg-[#F2F3F3] md:bg-[#ddeee5] hover:bg-[#ddeee5] md:hover:bg-[#F2F3F3] p-1.5 rounded cursor-pointer md:mr-0 mr-3" id="notification_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-bell">
+                                <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
+                                </path>
+                                <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                            </svg>
+                        </button>
+                        <div id="notification_box">
+                            <div class="px-3 pt-3 font-bold text-lg">Notifications</div>
+                            <div class="px-3 text-[13px] pb-4 text-gray-400">you have <span class="text-blue-300" id="notification_count"></span> Today</div>
+                            <div id="notification_details"></div>
+                            <section id="notification_loader">
+                                <span class="notification_loader"></span>
+                            </section>
+                            <a href="/notification" class="block bg-blue-500 text-white text-center p-2 rounded-br rounded-bl text-sm">See all notifications</a>
+                        </div>
                     </div>
                     <div class="md:block hidden bg-[#F2F3F3] hover:bg-[#ddeee5] p-1.5 rounded cursor-pointer md:mx-3 fullscreen"
                         id="fullscreen_btn">
@@ -488,14 +501,25 @@
                         <div class="text-sm" id="date"></div>
                     </div>
                 </div>
-                <div class="order-1 lg:order-2 lg:mb-0 mb-5">
-                    <div class="machineNumber_dropdown" id="machineNumber_dropdown">
+
+                <div class="order-1 lg:order-2 lg:mb-0 mb-5 flex items-center lg:flex-row flex-col">
+                    <div class="lg:order-1 lg:mr-4 lg:mt-0 mt-5" id="dashboard_loader">
+                        <div class="dashboard_loader"></div>
+                    </div>
+                    <div class="lg:order-2 unit_dropdown lg:mr-3 lg:mb-0 mb-2" id="unit_dropdown">
+                        <input type="text" name="" id="unit_text" class="unit_text" placeholder="Unit"
+                            readonly>
+                        <div class="unit_options" id="unit_option"></div>
+                    </div>
+
+                    <div class="lg:order-3 machineNumber_dropdown" id="machineNumber_dropdown">
                         <input type="text" name="" id="machineNo_text" class="machineNo_text" placeholder="Machine No"
                             readonly>
                         <div class="machineNumber_options" id="machine_no_option"></div>
                     </div>
                 </div>
             </div>
+
 
             <div class="lg:mt-3 mt-7">
                 <div class="grid xl:grid-cols-4 lg:grid-cols-2 grid-cols-1 gap-3">
@@ -556,18 +580,23 @@
                         <div class="flex  items-center">
                             <div class="">
                                 <div class="flex items-center">
-                                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                    <!-- <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
                                             stroke="#dda15e" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round" />
+                                    </svg> -->
+
+                                    <svg fill="#dda15e" width="20px" height="20px" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M112,176a4.0002,4.0002,0,0,1-4,4H80a4,4,0,0,1,0-8h28A4.0002,4.0002,0,0,1,112,176Zm64-4H148a4,4,0,0,0,0,8h28a4,4,0,0,0,0-8Zm68,43.9834a4.0002,4.0002,0,0,1-4,4H216.16724c-.05677.002-.11.0166-.16724.0166s-.11047-.01465-.16724-.0166H40.16724c-.05677.002-.11.0166-.16724.0166s-.11047-.01465-.16724-.0166H16a4,4,0,0,1,0-8H36V88a4.00033,4.00033,0,0,1,6.40039-3.2002L100,128V88a4.00033,4.00033,0,0,1,6.40039-3.2002l44.1438,33.1084,12.5144-87.60547A12.06044,12.06044,0,0,1,174.93848,20h18.123a12.06044,12.06044,0,0,1,11.87989,10.30273L219.96,135.43457c.01379.09668.00513.19043.012.28613.0066.09424.02808.1836.02808.2793v75.9834h20A3.99989,3.99989,0,0,1,244,215.9834Zm-86.15637-92.60059L169.333,132h42.05481L197.02148,31.43457A4.01977,4.01977,0,0,0,193.06152,28h-18.123a4.01977,4.01977,0,0,0-3.96,3.43457ZM44,211.9834H212V140H168a4.00312,4.00312,0,0,1-2.40039-.7998L108,96v40a4.00033,4.00033,0,0,1-6.40039,3.2002L44,96Z" />
                                     </svg>
-                                    <p class="ml-2 font-medium">Operator : </p>
+                                    <p class="ml-2 font-medium">Unit : </p>
                                 </div>
                             </div>
                             <div class="ml-3">
-                                <div class="font-bold" id="operator_name">John</div>
+                                <div class="font-bold" id="operator_name">-</div>
                             </div>
                         </div>
                         <div class="flex  items-center mt-2">
@@ -584,12 +613,14 @@
                                 </div>
                             </div>
                             <div class="ml-3">
-                                <div class="font-bold" id="operator_shift">I</div>
+                                <div class="font-bold" id="operator_shift">-</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+           
 
             <div class="mt-3">
                 <div class="grid xl:grid-cols-3 grid-cols-1 gap-3">
@@ -624,7 +655,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -634,6 +664,7 @@
     <script src="/js/authCheck.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/dashboard.js"></script>
+    <script src="/js/notification.js"></script>
 
 
 

@@ -36,6 +36,11 @@ const a_password_err = document.getElementById('a_password_err');
 const a_cpassword_err = document.getElementById('a_cpassword_err');
 
 
+const delete_account_btn = document.getElementById('delete_account_btn');
+const delete_account_id_input = document.getElementById('delete_account_id_input');
+const delete_account_loader = document.getElementById('delete_account_loader');
+
+
 
 const notyf = new Notyf();
 
@@ -60,6 +65,8 @@ async function getProfile() {
 
 
         if (data) {
+
+            delete_account_id_input.value = data.User_ID;
 
             admin_profile.classList.remove('active');
             loader.classList.remove('active');
@@ -125,6 +132,7 @@ a_update_btn.addEventListener('click', async () => {
 
 
         if (data) {
+
             text_loader.innerHTML = "";
 
             a_name_input.value = data.Name;
@@ -315,6 +323,8 @@ cancel_resetpassword_btn.addEventListener('click', () => {
     password_container.classList.remove('active')
     save_resetpassword_btn.classList.remove('active')
     cancel_resetpassword_btn.classList.remove('active')
+    a_password_err.innerHTML = "";
+    a_cpassword_err.innerHTML = "";
 })
 
 
@@ -486,6 +496,87 @@ save_resetpassword_btn.addEventListener('click', async () => {
 
         text_loader.innerHTML = "";
         const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
+        notyf.error({
+            message: resErr,
+            duration: 5000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            dismissible: true
+        })
+    }
+
+})
+
+
+
+delete_account_btn.addEventListener('click', async () => {
+
+    try {
+
+        var result = confirm("Are you sure, you want to delete your profile?");
+
+        if (result == true) {
+
+            if (delete_account_id_input.value) {
+
+                delete_account_loader.innerHTML = "Loading...!";
+
+                const a_token = sessionStorage.getItem('alubee');
+
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${a_token}`
+                    }
+                }
+
+                const { data } = await axios.delete(`${hostUrl}/admin/delete/${delete_account_id_input.value}`, config);
+
+                if (data?.success) {
+                    delete_account_loader.innerHTML = "";
+                    logout();
+
+                } else {
+
+                    delete_account_loader.innerHTML = "";
+                    notyf.error({
+                        message: 'Something went wrong to delete!',
+                        duration: 5000,
+                        position: {
+                            x: 'right',
+                            y: 'top',
+                        },
+                        dismissible: true
+                    })
+                }
+
+            } else {
+
+                delete_account_loader.innerHTML = "";
+                notyf.error({
+                    message: 'ID is required to delete!',
+                    duration: 5000,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                    dismissible: true
+                })
+            }
+
+        }else{
+            return false
+        }
+
+        
+
+    } catch (error) {
+        
+        delete_account_loader.innerHTML = "";
+        const resErr = error.response && error.response.data.message ? error.response.data.message : error.message
+
         notyf.error({
             message: resErr,
             duration: 5000,

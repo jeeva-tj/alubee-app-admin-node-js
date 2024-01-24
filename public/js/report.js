@@ -66,7 +66,7 @@ async function reportsFilterReq() {
 
             loader.classList.remove('active');
             notyf.error({
-                message: 'Something went wrong!',
+                message: 'No Results Found',
                 duration: 5000,
                 position: {
                     x: 'right',
@@ -96,6 +96,7 @@ reportsFilterReq();
 
 
 
+const r_unit = document.getElementById('r_unit');
 const r_date = document.getElementById('r_date');
 const r_shift = document.getElementById('r_shift');
 const r_machine = document.getElementById('r_machine');
@@ -147,6 +148,9 @@ reportFilter_form.addEventListener('submit', async(e) => {
 
 
             if (reports) {
+
+                console.log(reports);
+                r_unit.innerHTML = reports?.data[0]?.Unit ? reports?.data[0]?.Unit : '-' ;
                 r_date.innerHTML = reports?.data[0]?.Work_Date?.value ? reports?.data[0]?.Work_Date?.value : '-' ;
                 r_shift.innerHTML = reports?.data[0]?.Shift ? reports?.data[0]?.Shift : '-';
                 r_machine.innerHTML = reports?.data[0]?.Machine_No ? reports?.data[0]?.Machine_No : '-';
@@ -185,6 +189,7 @@ reportFilter_form.addEventListener('submit', async(e) => {
                 pdf_page_container.classList.add('active');
 
             }else{
+                
                 pdf_page_container.classList.remove('active');
                 loader.classList.remove('active');
                 notyf.error({

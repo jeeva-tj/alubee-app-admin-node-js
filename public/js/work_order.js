@@ -3,6 +3,7 @@ const work_order_table = document.getElementById('work_order_table');
 const loader = document.getElementById('loader');
 const wo_search = document.getElementById('wo_search');
 const wo_refresh_btn = document.getElementById('wo_refresh_btn');
+const woEmptyMsg = document.getElementById('wo_empty_msg');
 
 
 
@@ -10,6 +11,8 @@ const notyf = new Notyf();
 
 wo_refresh_btn.addEventListener('click', () => {
     getAllWorkOrders();
+    getNotification();
+
 })
 
 
@@ -19,6 +22,7 @@ wo_search.addEventListener('keyup', async(e) => {
 
     try {
 
+        woEmptyMsg.innerHTML = '';
         const a_token = sessionStorage.getItem('alubee');
 
         const config = {
@@ -34,23 +38,25 @@ wo_search.addEventListener('keyup', async(e) => {
             return Object.values(item).join('').toLowerCase().includes(wo_search.value.toLowerCase())
         })
 
-        if (filter) {
+        if (filter.length > 0) {
+ 
+            work_order_table.classList.remove('active');
 
             let workOrders = '';
             filter.forEach((val, index) => {
                 workOrders += `
                     <tr class="bg-white border-b whitespace-nowrap">
                         <td class="px-4 py-4 font-medium text-black">${index + 1}</td>
-                        <td class="px-4 py-4">${val.PlanID}</td>
-                        <td class="px-4 py-4">${val.Shift}</td>
-                        <td class="px-4 py-4 font-medium text-black">${val.Machine_No}</td>
-                        <td class="px-4 py-4">${val.Part_No}</td>
-                        <td class="px-4 py-4">${val.Shot_Plan}</td>
-                        <td class="px-4 py-4">${val.Rejection_Plan}</td>
-                        <td class="px-4 py-4">${val.Operator}</td>
-                        <td class="px-4 py-4">${val.Date.value}</td>
+                        <td class="px-4 py-4">${val.id}</td>
+                        <td class="px-4 py-4">${val.shift}</td>
+                        <td class="px-4 py-4 font-medium text-black">${val.machine_no}</td>
+                        <td class="px-4 py-4">${val.part_no}</td>
+                        <td class="px-4 py-4">${val.shot_plan}</td>
+                        <td class="px-4 py-4">${val.rejection_plan}</td>
+                        <td class="px-4 py-4">${val.operator}</td>
+                        <td class="px-4 py-4">${val.date}</td>
                         <td class="px-3 py-3 flex items-center ">
-                            <a href='/work-order-update/${val.PlanID}'
+                            <a href='/work-order-update/${val.id}'
                                 class="font-medium text-green-600 hover:underline" id="edit_work_order">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +75,7 @@ wo_search.addEventListener('keyup', async(e) => {
                                 </svg>
                             </a>
                             <button
-                                onclick="work_order_delete('${val.PlanID}')"
+                                onclick="work_order_delete('${val.id}')"
                                 class="ml-6 font-medium text-green-600 hover:underline" id="delete_work_order">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -99,16 +105,8 @@ wo_search.addEventListener('keyup', async(e) => {
 
             work_order_tbody.innerHTML = workOrders;
         } else {
-
-            notyf.error({
-                message: 'Something wrong!',
-                duration: 5000,
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-                dismissible: true
-            })
+            woEmptyMsg.innerHTML = 'No Records Match Your Search';
+            work_order_table.classList.add('active');
         }
 
     } catch (error) {
@@ -145,26 +143,27 @@ async function getAllWorkOrders() {
         const { data } = await axios.get(`${hostUrl}/work-orders`, config)
 
 
-        if (data) {
+        if (data.length > 0) {
 
             work_order_table.classList.remove('active');
             loader.classList.remove('active');
+            woEmptyMsg.innerHTML = "";
 
             let workOrders = '';
             data.forEach((val, index) => {
                 workOrders += `
                     <tr class="bg-white border-b whitespace-nowrap">
                         <td class="px-4 py-4 font-medium text-black">${index + 1}</td>
-                        <td class="px-4 py-4 ">${val.PlanID}</td>
-                        <td class="px-4 py-4 ">${val.Shift}</td>
-                        <td class="px-4 py-4 font-medium text-black ">${val.Machine_No}</td>
-                        <td class="px-4 py-4 ">${val.Part_No}</td>
-                        <td class="px-4 py-4 ">${val.Shot_Plan}</td>
-                        <td class="px-4 py-4 ">${val.Rejection_Plan}</td>
-                        <td class="px-4 py-4 ">${val.Operator}</td>
-                        <td class="px-4 py-4 ">${val.Date.value}</td>
+                        <td class="px-4 py-4 ">${val.id}</td>
+                        <td class="px-4 py-4 ">${val.shift}</td>
+                        <td class="px-4 py-4 font-medium text-black ">${val.machine_no}</td>
+                        <td class="px-4 py-4 ">${val.part_no}</td>
+                        <td class="px-4 py-4 ">${val.shot_plan}</td>
+                        <td class="px-4 py-4 ">${val.rejection_plan}</td>
+                        <td class="px-4 py-4 ">${val.operator}</td>
+                        <td class="px-4 py-4 ">${val.date}</td>
                         <td class="px-3 py-3 flex items-center  ">
-                            <a href='/work-order-update/${val.PlanID}'
+                            <a href='/work-order-update/${val.id}'
                                 class="font-medium text-green-600 hover:underline" id="edit_work_order">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -183,7 +182,7 @@ async function getAllWorkOrders() {
                                 </svg>
                             </a>
                             <button
-                                onclick="work_order_delete('${val.PlanID}')"
+                                onclick="work_order_delete('${val.id}')"
                                 class="ml-6 font-medium text-green-600 hover:underline" id="delete_work_order">
                                 <svg width="23px" height="23px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -215,15 +214,8 @@ async function getAllWorkOrders() {
         }else{
 
             loader.classList.remove('active');
-            notyf.error({
-                message: 'Something wrong!',
-                duration: 5000,
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-                dismissible: true
-            })
+            woEmptyMsg.innerHTML = "No Records Found";
+            
         }
 
     } catch (error) {
@@ -249,27 +241,53 @@ getAllWorkOrders();
 async function work_order_delete(id){
 
     try {
-        
-        if (id) {
 
-            const a_token = sessionStorage.getItem('alubee');
+        var result = confirm("Are you sure, you want to delete?");
 
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${a_token}`
+        if (result == true) {
+
+            if (id) {
+
+                work_order_table.classList.add('active');
+                loader.classList.add('active');
+
+                const a_token = sessionStorage.getItem('alubee');
+
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${a_token}`
+                    }
                 }
-            }
 
-            const { data } = await axios.delete(`${hostUrl}/work-order/${id}`, config);
+                const { data } = await axios.delete(`${hostUrl}/work-order/${id}`, config);
 
-            if (data?.success) {
-                getAllWorkOrders();
+                if (data?.success) {
+                    work_order_table.classList.remove('active');
+                    loader.classList.remove('active');
+                    
+                    getAllWorkOrders();
+                    getNotification();
+
+                } else {
+
+                    loader.classList.remove('active');
+                    notyf.error({
+                        message: 'Something went wrong to delete!',
+                        duration: 3000,
+                        position: {
+                            x: 'right',
+                            y: 'top',
+                        },
+                        dismissible: true
+                    })
+                }
 
             } else {
 
+                loader.classList.remove('active');
                 notyf.error({
-                    message: 'Something went wrong to delete!',
+                    message: 'ID is required to delete!',
                     duration: 3000,
                     position: {
                         x: 'right',
@@ -280,16 +298,7 @@ async function work_order_delete(id){
             }
 
         } else {
-
-            notyf.error({
-                message: 'ID is required to delete!',
-                duration: 3000,
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-                dismissible: true
-            })
+            return false;
         }
 
     } catch (error) {

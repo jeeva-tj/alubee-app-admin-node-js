@@ -131,8 +131,139 @@ select:-webkit-autofill:focus {
 
 /* ========================================================================== */
 
+/* ================================ UNIT DROPDOWN ============================*/
+.unit_dropdown {
+    position: relative;
+    width: 100%;
+    height: 50px;
+
+}
+
+.unit_dropdown::before {
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 24px;
+    z-index: 1;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #333;
+    border-right: 2px solid #333;
+    transform: rotate(-45deg);
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.unit_dropdown.active::before {
+    top: 21px;
+    transform: rotate(-225deg);
+}
+
+.unit_dropdown input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #cbcbcb;
+    outline: none;
+    box-sizing: 0 5px 20px rgba(0, 0, 0, 0.05);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.35px;
+    line-height: 24px;
+    color: #000;
+    outline: none;
+}
+
+.unit_dropdown input:focus {
+    border: 1px solid #04A551;
+}
+
+
+.unit_dropdown input::placeholder {
+    color: #000;
+}
+
+.unit_dropdown .unit_options {
+    position: absolute;
+    top: 56px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: none;
+    z-index: 9999;
+}
+
+.unit_dropdown.active .unit_options {
+    display: block;
+}
+
+.unit_dropdown .unit_options {
+    overflow-y: scroll;
+}
+
+/* width */
+.unit_dropdown .unit_options::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.unit_dropdown .unit_options::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 20px;
+}
+
+/* Handle */
+.unit_dropdown .unit_options::-webkit-scrollbar-thumb {
+    background: #bbbbbb;
+    border-radius: 20px;
+}
+
+/* Handle on hover */
+.unit_dropdown .unit_options::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.unit_dropdown .unit_options .options {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600px;
+    letter-spacing: 0.35px;
+    line-height: 24px;
+}
+
+.unit_dropdown .unit_options div:hover {
+    background: rgb(237, 237, 237);
+    color: #000;
+}
+
+@media(min-width:768px) {
+
+    .unit_dropdown {
+        width: 130px;
+    }
+}
+
+/* ================================================================================*/
+
 
 /* =========================== Machine No Dropdown Filter ========================= */
+
+#machine_unit{
+    display: none;
+}
+
+#machine_unit.active{
+    display: block;
+}
 
 .machineNumber_dropdown {
     position: relative;
@@ -141,7 +272,7 @@ select:-webkit-autofill:focus {
 
 }
 
-.machineNumber_dropdown::before {
+.machineNumber_dropdown::before{
     content: '';
     position: absolute;
     right: 20px;
@@ -236,8 +367,8 @@ select:-webkit-autofill:focus {
 .machineNumber_dropdown .machineNumber_options .options {
     padding: 12px 20px;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: 400px;
+    font-size: 14px;
+    font-weight: 600px;
     letter-spacing: 0.35px;
     line-height: 24px;
 }
@@ -248,7 +379,7 @@ select:-webkit-autofill:focus {
 }
 
 @media(min-width:768px){
-    .machineNumber_dropdown{
+    .machineNumber_dropdown {
         width: 300px;
     }
 }
@@ -314,3 +445,105 @@ select:-webkit-autofill:focus {
         height: calc(100vh - 85px);
     }
 }
+
+
+
+.notification_container{
+    position: relative;
+}
+
+.notification_container #notification_box{
+    position: absolute;
+    top: 34px;
+    right: 0;
+    content: '';
+    width: 350px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    border-radius: 6px;
+    display: none;
+}
+
+
+#notification_box.active{
+    display: block;
+}
+
+
+.notification_loader {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 4px solid #000000;
+    border-right: 4px solid transparent;
+    -webkit-animation: rotation 1s linear infinite;
+    animation: rotation 1s linear infinite;
+}
+
+#notification_loader {
+    display: none;
+}
+
+#notification_loader.active {
+    max-width: 25px;
+    margin: 0 auto;
+    display: block;
+    padding: 2rem 0;
+}
+
+.notification_loader:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border-left: 4px solid #00a651;
+    border-bottom: 4px solid transparent;
+    animation: rotation 0.5s linear infinite reverse;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+ .dashboard_loader {
+     width: 20px;
+     padding: 3px;
+     aspect-ratio: 1;
+     border-radius: 50%;
+     background: #04A551;
+     --_m:
+         conic-gradient(#0000 10%, #000),
+         linear-gradient(#000 0 0) content-box;
+     -webkit-mask: var(--_m);
+     mask: var(--_m);
+     -webkit-mask-composite: source-out;
+     mask-composite: subtract;
+     animation: l3 1s infinite linear;
+ }
+
+ @keyframes l3 {
+     to {
+         transform: rotate(1turn)
+     }
+ }
+
+
+ #dashboard_loader{
+    display: none;
+ }
+
+ #dashboard_loader.active{
+    display: block;
+ }

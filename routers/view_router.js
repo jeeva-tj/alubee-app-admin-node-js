@@ -11,7 +11,8 @@ import {
     userAddPage,
     userUpdatePage,
     userResetPage,
-    adminProfilePage
+    adminProfilePage,
+    notificationPage
 } from '../controllers/view_controller.js';
 const router = express.Router();
 import { authRoleProtect } from '../middlewares/AuthRole.js';
@@ -28,6 +29,7 @@ router.route('/user-add').get(authRoleProtect, userAddPage);
 router.route('/user-update/:id').get(authRoleProtect, userUpdatePage);
 router.route('/user-reset/:id').get(authRoleProtect, userResetPage);
 router.route('/admin/profile').get(authRoleProtect, adminProfilePage);
+router.route('/notification').get(authRoleProtect, notificationPage);
 
 
 export default router;
